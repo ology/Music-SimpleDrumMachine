@@ -4,6 +4,10 @@ package Music::SimpleDrumMachine;
 
 our $VERSION = '0.0100';
 
+use v5.36;
+use feature 'try';
+no warnings 'experimental::try';
+
 use Moo;
 use strictures 2;
 use Carp qw(croak);
@@ -247,7 +251,7 @@ for my $is ( keys %attrs ) {
     for my $attr ( keys $attrs{$is}->%* ) {
         has $attr => (
             is      => $is,
-            default => sub { $attrs->{$is}{$attr} },
+            default => sub { $attrs{$is}{$attr} },
         );
     }
 }
@@ -292,11 +296,11 @@ sub BUILD {
 
             if ($self->_ticks % $self->_nth == 0) {
                 if (($self->_beat_count + $self->beats - $self->_trigger) % ($self->beats * $self->divisions - 1) == 0) {
-                    self->_adjust_drums($self->drums, \$toggle, 1, \$filled); # fill!
+                    self->_adjust_drums(1); # fill!
                     $self->_filled($self->_filled + 1);
                 }
                 if ($self->_beat_count % ($self->beats * $self->divisions) == 0) {
-                    $self->_adjust_drums($self->drums, \$toggle, 0, \$filled); # normal part
+                    $self->_adjust_drums(0); # normal part
                     $self->_trigger($self->_trigger + 1);
                 }
                 for my $drum (keys $self->drums->%*) {
@@ -345,10 +349,10 @@ sub _adjust_cymbals($self) {
     $self->_filled(0);
 }
 
-sub adjust_drums($self) {
+sub adjust_drums($self, $fill_flag) {
     if ($self->_fill_flag) {
         say 'fill' if $self->verbose;
-        my $size = rand() < 0.5 ? $divisions / 2 : $divisions;
+        my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
         say "S: $size" if $self->verbose;
         my %durations = (
             sn => [1],
@@ -356,7 +360,7 @@ sub adjust_drums($self) {
             qn => [1,0,0,0],
         );
         my $mdp = Music::Duration::Partition->new(
-            size    => $divisions,
+            size    => $self->divisions,
             pool    => [qw(qn en sn)],
             weights => [1, 2, 1],
             groups  => [0, 0, 2],
@@ -371,9 +375,9 @@ sub adjust_drums($self) {
         #     $drums->{snare}{pat} = [ $pats{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
         # }
         # else {
-            $drums->{hihat}{pat} = [ (0) x $beats ];
-            $drums->{kick}{pat}  = [ (0) x $beats ];
-            $drums->{snare}{pat} = \@converted;
+            $self->drums->{hihat}{pat} = [ (0) x $self->beats ];
+            $self->drums->{kick}{pat}  = [ (0) x $self->beats ];
+            $self->drums->{snare}{pat} = \@converted;
         # }
     }
     # elsif ($$toggle == 0) {
@@ -412,7 +416,7 @@ sub velocity($self, $min, $max, $offset) {
 }
 
 sub random_note($self) {
-    my $random = $self->notes[ int rand $self->notes->@* ] - 24;
+    my $random = $self->notes->[ int rand $self->notes->@* ] - 24;
     return $random;
 }
 
