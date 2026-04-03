@@ -308,12 +308,12 @@ sub BUILD {
                     $self->_midi_out->note_on(
                         $self->drums->{ $drum->{drum} }{chan},
                         $self->drums->{ $drum->{drum} }{num},
-                        $self->drum->{velocity}
+                        $drum->{velocity}
                     );
                 }
                 $self->_beat_count($self->_beat_count + 1);
             }
-            else {
+            else { # drain queue
                 while (my $drum = pop $self->_queue->@*) {
                     $self->_midi_out->note_off(
                         $self->drums->{ $drum->{drum} }{chan},
