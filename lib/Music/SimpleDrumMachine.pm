@@ -22,8 +22,6 @@ use namespace::clean;
 
   use Music::SimpleDrumMachine ();
 
-  my $dm = Music::SimpleDrumMachine->new(verbose => 1);
-
   my $dm = Music::SimpleDrumMachine->new(
     port_name => 'midi device',
     bpm       => 100,
@@ -36,7 +34,7 @@ use namespace::clean;
   );
 
   sub part_A {
-      say 'part A';
+      print "part A\n";
       my %patterns = (
           hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
           kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
@@ -46,7 +44,7 @@ use namespace::clean;
       return $next, \%patterns;
   }
   sub part_B {
-      say 'part B';
+      print "part B\n";
       my %patterns = (
           hihat => [qw(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)],
           kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
