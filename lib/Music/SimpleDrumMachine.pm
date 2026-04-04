@@ -334,8 +334,8 @@ my %attrs = (
         _filled     => 0, # we just filled
     },
 );
-for my $is ( keys %attrs ) {
-    for my $attr ( keys $attrs{$is}->%* ) {
+for my $is (keys %attrs) {
+    for my $attr (keys $attrs{$is}->%*) {
         has $attr => (
             is      => $is,
             default => sub { $attrs{$is}{$attr} },
