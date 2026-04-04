@@ -433,6 +433,7 @@ sub _adjust_cymbals($self) {
 }
 
 sub _adjust_drums($self, $fill_flag) {
+    say 'Beats: ' . $self->_beat_count;
     if ($fill_flag) {
         say 'fill' if $self->verbose;
         my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
