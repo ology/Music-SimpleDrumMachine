@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0103';
+our $VERSION = '0.0104';
 
 use v5.36;
 use feature 'try';
@@ -171,7 +171,7 @@ sub _build_drums {
 
 Code-ref of the part to play for 1/2-bar fills.
 
-Default: \&_default_part
+Default: C<\&_default_part>
 
 =cut
 
@@ -188,7 +188,7 @@ has fill_part => (
 
 Name of the part to play first.
 
-Default: '_default_part'
+Default: C<'_default_part'>
 
 =cut
 
@@ -204,7 +204,7 @@ has next_part => (
 
 The notes to set for each drum - why not?
 
-Default: [60, 64, 67]
+Default: C<[60, 64, 67]>
 
 =cut
 
