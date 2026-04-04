@@ -78,7 +78,7 @@ Default: C<9>
 
 has chan => (
     is      => 'ro',
-    isa     => sub { croak "$_[0] is not an integer" unless $_[0] =~ /^-?\d+$/ },
+    isa     => sub { croak "$_[0] is not valid" unless $_[0] =~ /^-?\d+$/ },
     default => sub { 9 },
 );
 
