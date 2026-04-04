@@ -300,7 +300,7 @@ sub BUILD {
                     $self->_filled($self->_filled + 1);
                 }
                 if ($self->_beat_count % ($self->beats * $self->divisions) == 0) {
-                    $self->_adjust_drums(1); # normal part XXX
+                    $self->_adjust_drums(0); # normal part
                     $self->_trigger($self->_trigger + 1);
                 }
                 for my $drum (keys $self->drums->%*) {
