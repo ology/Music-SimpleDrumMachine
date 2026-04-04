@@ -148,6 +148,21 @@ has notes => (
     default => sub { [qw(60 64 67)] },
 );
 
+=head2 parts
+
+  $parts = $dm->parts;
+
+List of code-refs of the parts to play.
+
+Default: C<[\default_part]>
+
+=cut
+
+has parts => (
+    is      => 'rw',
+    default => sub { ['default_part'] },
+);
+
 =head2 port_name
 
   $port = $dm->port_name;
@@ -194,7 +209,7 @@ has verbose => (
 );
 
 has _queue => (
-    is      => 'ro',
+    is      => 'rw',
     default => sub { [] },
 );
 
@@ -380,6 +395,21 @@ sub _adjust_drums($self, $fill_flag) {
             $self->drums->{snare}{pat} = \@converted;
         # }
     }
+    for my $part ($self->parts->@*) {
+        my ($next, $patterns);
+        if (ref $part eq 'CODE') {
+            say 'CODE!';
+        }
+        else {
+            say 'Default!';
+            ($next, $patterns) = default_part();
+        }
+        for my $drum (keys %$patterns) {
+            say "$drum $patterns->{$drum}";
+            $self->drums->{$drum}{pat} = $patterns->{$drum};
+        }
+    }
+    say ddc $self->drums;
     # elsif ($$toggle == 0) {
     #     my %pats = part_A($mcr, $drums, $primes, $beats);
     #     $drums->{hihat}{pat} = $pats{hihat};
@@ -418,6 +448,16 @@ sub _velocity($self, $min, $max, $offset) {
 sub _random_note($self) {
     my $random = $self->notes->[ int rand $self->notes->@* ] - 24;
     return $random;
+}
+
+sub default_part {
+    my %patterns = (
+        hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+        kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
+        snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
+    );
+    my $next = 'default_part';
+    return $next, \%patterns;
 }
 
 1;

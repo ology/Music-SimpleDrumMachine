@@ -35,7 +35,8 @@ sub part_A($dm, $mcr, $primes) {
         kick  => $mcr->euclid($q, $dm->beats),
         snare => $mcr->rotate_n($r, $mcr->euclid(2, $dm->beats)),
     );
-    return %patterns;
+    my $next = 'B';
+    return $next, %patterns;
 }
 
 sub part_B($dm, $mcr, $primes) {
@@ -47,7 +48,8 @@ sub part_B($dm, $mcr, $primes) {
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
     );
-    return %patterns;
+    my $next = 'C';
+    return $next, %patterns;
 }
 
 sub part_C($dm, $mcr, $primes) {
@@ -59,7 +61,8 @@ sub part_C($dm, $mcr, $primes) {
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
-    return %patterns;
+    my $next = 'A';
+    return $next, %patterns;
 }
 
 sub primes_list($primes) {
