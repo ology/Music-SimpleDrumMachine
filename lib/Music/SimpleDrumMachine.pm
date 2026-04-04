@@ -138,14 +138,14 @@ sub _build_drums {
 
 Code-ref of the part to play for 1/2-bar fills.
 
-Default: \&default_part
+Default: \&_default_part
 
 =cut
 
 has fill_part => (
     is      => 'ro',
     isa     => sub { croak "$_[0] is not an code-ref" unless ref($_[0]) eq 'CODE' },
-    default => sub { \&default_part },
+    default => sub { \&_default_part },
 );
 
 =head2 next_part
@@ -154,13 +154,13 @@ has fill_part => (
 
 Name of the part to play first.
 
-Default: 'default_part'
+Default: '_default_part'
 
 =cut
 
 has next_part => (
     is      => 'rw',
-    default => sub { 'default_part' },
+    default => sub { '_default_part' },
 );
 
 =head2 notes
@@ -185,13 +185,13 @@ has notes => (
 
 List of code-refs of the parts to play.
 
-Default: C<[\&default_part]>
+Default: C<[\&_default_part]>
 
 =cut
 
 has parts => (
     is      => 'rw',
-    default => sub { { default_part => \&default_part } },
+    default => sub { { _default_part => \&_default_part } },
 );
 
 =head2 port_name
@@ -474,13 +474,13 @@ sub _random_note($self) {
     return $random;
 }
 
-sub default_part {
+sub _default_part {
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
-    my $next = 'default_part';
+    my $next = '_default_part';
     return $next, \%patterns;
 }
 
