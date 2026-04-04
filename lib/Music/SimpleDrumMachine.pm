@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0105';
+our $VERSION = '0.0106';
 
 use v5.36;
 use feature 'try';
@@ -44,7 +44,7 @@ use namespace::clean;
           kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
           snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
       );
-      my $next = 'part_C';
+      my $next = 'part_B';
       return $next, \%patterns;
   }
   sub part_B {
