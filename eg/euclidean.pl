@@ -15,6 +15,7 @@ my $dm = Music::SimpleDrumMachine->new(
     port_name => shift || 'usb',
     bpm       => shift || 120,
     chan      => shift // 9,
+    verbose   => 1,
 );
 
 my %primes = ( # for computing patterns

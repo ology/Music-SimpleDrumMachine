@@ -78,7 +78,7 @@ Default: C<9>
 
 has chan => (
     is      => 'ro',
-    isa     => sub { croak "$_[0] is not an integer" unless $_[0] =~ /^\d+$/ },
+    isa     => sub { croak "$_[0] is not an integer" unless $_[0] =~ /^-?\d+$/ },
     default => sub { 9 },
 );
 
@@ -300,7 +300,7 @@ sub BUILD {
                     $self->_filled($self->_filled + 1);
                 }
                 if ($self->_beat_count % ($self->beats * $self->divisions) == 0) {
-                    $self->_adjust_drums(1); # normal part
+                    $self->_adjust_drums(1); # normal part XXX
                     $self->_trigger($self->_trigger + 1);
                 }
                 for my $drum (keys $self->drums->%*) {
