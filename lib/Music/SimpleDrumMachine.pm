@@ -437,7 +437,7 @@ sub _adjust_drums($self, $fill_flag) {
     if ($fill_flag) {
         say 'fill' if $self->verbose;
         my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
-        say "S: $size" if $self->verbose;
+        say "size: $size" if $self->verbose;
         my %durations = (
             sn => [1],
             en => [1,0],
