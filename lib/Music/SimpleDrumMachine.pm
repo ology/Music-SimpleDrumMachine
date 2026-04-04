@@ -132,6 +132,22 @@ sub _build_drums {
     return $drums;
 }
 
+=head2 fill_part
+
+  $fill_part = $dm->fill_part;
+
+Code-ref of the part to play for 1/2-bar fills.
+
+Default: \default_part
+
+=cut
+
+has fill_part => (
+    is      => 'ro',
+    isa     => sub { croak "$_[0] is not an code-ref" unless ref($_[0]) eq 'CODE' },
+    default => sub { \default_part },
+);
+
 =head2 notes
 
   $notes = $dm->notes;
@@ -382,18 +398,18 @@ sub _adjust_drums($self, $fill_flag) {
         );
         my $motif = $mdp->motif;
         my @converted = map { $durations{$_}->@* } @$motif;
-        # if ($size < $self->divisions) {
-        #     my $div = $self->beats / $size;
-        #     my %pats = part_A($mcr, $drums, $primes, $beats);
-        #     $drums->{hihat}{pat} = [ $pats{hihat}->@[0 .. $div - 1], (0) x $div ];
-        #     $drums->{kick}{pat}  = [ $pats{kick}->@[0 .. $div - 1],  (0) x $div ];
-        #     $drums->{snare}{pat} = [ $pats{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
-        # }
-        # else {
+        if ($size < $self->divisions) {
+            my $div = $self->beats / $size;
+            my ($next, $pats) = $self->fill_part->();
+            $drums->{hihat}{pat} = [ $pats{hihat}->@[0 .. $div - 1], (0) x $div ];
+            $drums->{kick}{pat}  = [ $pats{kick}->@[0 .. $div - 1],  (0) x $div ];
+            $drums->{snare}{pat} = [ $pats{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+        }
+        else {
             $self->drums->{hihat}{pat} = [ (0) x $self->beats ];
             $self->drums->{kick}{pat}  = [ (0) x $self->beats ];
             $self->drums->{snare}{pat} = \@converted;
-        # }
+        }
     }
     else {
         for my $part ($self->parts->@*) {
