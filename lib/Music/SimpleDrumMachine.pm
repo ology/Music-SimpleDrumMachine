@@ -434,34 +434,13 @@ sub _adjust_drums($self, $fill_flag) {
             $self->drums->{$drum}{pat} = $patterns->{$drum};
         }
     }
-    # elsif ($$toggle == 0) {
-    #     my %pats = part_A($mcr, $drums, $primes, $beats);
-    #     $drums->{hihat}{pat} = $pats{hihat};
-    #     $drums->{kick}{pat}  = $pats{kick};
-    #     $drums->{snare}{pat} = $pats{snare};
-    #     $$toggle = 1; # set to part B
-    # }
-    # elsif ($$toggle == 1) {
-    #     my %pats = part_B($mcr, $drums, $primes, $beats);
-    #     $drums->{hihat}{pat} = $pats{hihat};
-    #     $drums->{kick}{pat}  = $pats{kick};
-    #     $drums->{snare}{pat} = $pats{snare};
-    #     $$toggle = 2; # set to part C
-    # }
-    # elsif ($$toggle == 2) {
-    #     my %pats = part_C($mcr, $drums, $primes, $beats);
-    #     $drums->{hihat}{pat} = $pats{hihat};
-    #     $drums->{kick}{pat}  = $pats{kick};
-    #     $drums->{snare}{pat} = $pats{snare};
-    #     $$toggle = 0; # set to part A
-    # }
     $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
     $self->drums->{crash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
     $self->_adjust_cymbals;
-    # $drums->{hihat}{num} = random_note($notes);
-    # $drums->{kick}{num}  = random_note($notes);
-    # $drums->{snare}{num} = random_note($notes);
-    # $drums->{crash}{num} = random_note($notes);
+    # $drums->{hihat}{num} = $self->_random_note($notes);
+    # $drums->{kick}{num}  = $self->_random_note($notes);
+    # $drums->{snare}{num} = $self->_random_note($notes);
+    # $drums->{crash}{num} = $self->_random_note($notes);
 }
 
 sub _velocity($self, $min, $max, $offset) {
@@ -475,6 +454,7 @@ sub _random_note($self) {
 }
 
 sub _default_part {
+    say 'Default part!';
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
