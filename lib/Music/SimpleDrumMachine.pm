@@ -17,6 +17,8 @@ use MIDI::RtMidi::FFI::Device ();
 use Music::Duration::Partition ();
 use namespace::clean;
 
+no warnings 'experimental::try';
+
 =head1 SYNOPSIS
 
   use Music::SimpleDrumMachine ();
