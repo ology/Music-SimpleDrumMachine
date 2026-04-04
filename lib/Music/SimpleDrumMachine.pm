@@ -296,7 +296,7 @@ sub BUILD {
 
             if ($self->_ticks % $self->_nth == 0) {
                 if (($self->_beat_count + $self->beats - $self->_trigger) % ($self->beats * $self->divisions - 1) == 0) {
-                    self->_adjust_drums(1); # fill!
+                    $self->_adjust_drums(1); # fill!
                     $self->_filled($self->_filled + 1);
                 }
                 if ($self->_beat_count % ($self->beats * $self->divisions) == 0) {
