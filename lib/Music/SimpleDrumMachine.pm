@@ -322,7 +322,7 @@ Create a new C<Music::SimpleDrumMachine> object.
 sub BUILD {
     my ($self, $args) = @_;
 
-    $SIG{INT} = sub { 
+    $SIG{INT} = sub {
         say "\nStop";
         try {
             $self->_midi_out->panic;
