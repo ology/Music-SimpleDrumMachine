@@ -199,7 +199,7 @@ has _queue => (
 );
 
 has _midi_out => (
-    is      => 'ro',
+    is      => 'lazy',
     builder => '_build__midi_out',
 );
 
@@ -275,6 +275,7 @@ Create a new C<Music::SimpleDrumMachine> object.
 
 sub BUILD {
     my ($self, $args) = @_;
+
     $SIG{INT} = sub { 
         say "\nStop";
         try {
@@ -348,7 +349,7 @@ sub _adjust_cymbals($self) {
     $self->_filled(0);
 }
 
-sub adjust_drums($self, $fill_flag) {
+sub _adjust_drums($self, $fill_flag) {
     if ($self->_fill_flag) {
         say 'fill' if $self->verbose;
         my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
