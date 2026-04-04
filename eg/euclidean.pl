@@ -12,9 +12,9 @@ use Music::CreatingRhythms ();
 use Music::SimpleDrumMachine ();
 
 my $dm = Music::SimpleDrumMachine->new(
-    port => shift || 'usb',
-    bpm  => shift || 120,
-    chan => shift // 9,
+    port_name => shift || 'usb',
+    bpm       => shift || 120,
+    chan      => shift // 9,
 );
 
 my %primes = ( # for computing patterns

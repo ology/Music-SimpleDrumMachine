@@ -216,7 +216,7 @@ sub _build__midi_out {
 }
 
 has _interval => (
-    is      => 'ro',
+    is      => 'lazy',
     builder => '_build__interval',
 );
 
@@ -226,7 +226,7 @@ sub _build__interval {
 }
 
 has _nth => ( # clocks per 16th-note
-    is      => 'ro',
+    is      => 'lazy',
     builder => '_build__nth',
 );
 
