@@ -303,12 +303,12 @@ sub BUILD {
                     $self->_adjust_drums(0); # normal part
                     $self->_trigger($self->_trigger + 1);
                 }
-                for my $drum (keys $self->drums->%*) {
+                for my $drum (keys $self->drums->%*) { # fill the queue
                     if ($self->drums->{$drum}{pat}[ $self->_beat_count % scalar($self->drums->{$drum}{pat}->@*) ]) {
                         push $self->_queue->@*, { drum => $drum, velocity => $self->_velocity(-10, 10, 110) };
                     }
                 }
-                for my $drum ($self->_queue->@*) {
+                for my $drum ($self->_queue->@*) { # play the queue
                     $self->_midi_out->note_on(
                         $self->drums->{ $drum->{drum} }{chan},
                         $self->drums->{ $drum->{drum} }{num},
@@ -317,7 +317,7 @@ sub BUILD {
                 }
                 $self->_beat_count($self->_beat_count + 1);
             }
-            else { # drain queue
+            else { # drain the queue
                 while (my $drum = pop $self->_queue->@*) {
                     $self->_midi_out->note_off(
                         $self->drums->{ $drum->{drum} }{chan},
