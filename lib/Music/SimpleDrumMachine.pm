@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0101';
+our $VERSION = '0.0102';
 
 use v5.36;
 use feature 'try';
@@ -133,6 +133,7 @@ has divisions => (
 =head2 drums
 
   $drums = $dm->drums;
+  $dm->drums($drums);
 
 The known drums.
 
@@ -181,6 +182,7 @@ has fill_part => (
 =head2 next_part
 
   $next_part = $dm->next_part;
+  $dm->next_part($next_part);
 
 Name of the part to play first.
 
@@ -196,6 +198,7 @@ has next_part => (
 =head2 notes
 
   $notes = $dm->notes;
+  $dm->notes($notes);
 
 The notes to set for each drum - why not?
 
@@ -204,7 +207,7 @@ Default: [60, 64, 67]
 =cut
 
 has notes => (
-    is      => 'ro',
+    is      => 'rw',
     isa     => sub { croak "$_[0] is not an array-ref" unless ref($_[0]) eq 'ARRAY' },
     default => sub { [qw(60 64 67)] },
 );
@@ -212,6 +215,7 @@ has notes => (
 =head2 parts
 
   $parts = $dm->parts;
+  $dm->parts($parts);
 
 List of code-refs of the parts to play.
 
