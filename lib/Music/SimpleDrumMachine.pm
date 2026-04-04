@@ -56,7 +56,9 @@ use namespace::clean;
 
 =head1 DESCRIPTION
 
-C<Music::SimpleDrumMachine> is a simple 16th-note-phrase drummer.
+C<Music::SimpleDrumMachine> is a simple 16th-note-phrase drummer. By
+invoking this module, your MIDI device will begin playing in
+real-time.
 
 =head1 ATTRIBUTES
 
@@ -503,8 +505,15 @@ __END__
 
 =head1 SEE ALSO
 
+L<IO::Async::Loop>
+
+L<IO::Async::Timer::Periodic>
+
+L<MIDI::RtMidi::FFI::Device>
+
 L<Moo>
 
-L<http://somewhere.el.se>
+L<Music::Duration::Partition>
+
 
 =cut
