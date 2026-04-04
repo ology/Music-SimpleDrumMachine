@@ -328,7 +328,6 @@ my %attrs = (
         _ticks      => 0, # how many clock ticks?
         _beat_count => 0, # how many beats?
         _bar_count  => 0, # how many measures?
-        _toggle     => 0, # part A, B, C, ...?
         _hats       => 0, # 1st hihat beat bit
         _trigger    => 0, # trigger a fill
         _filled     => 0, # we just filled

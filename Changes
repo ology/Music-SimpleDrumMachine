@@ -2,6 +2,7 @@ Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
     - Swap stop and panic calls.
+    - Remove cruft.
 
 0.0106 2026-04-04 10:25:45
     - Stupid typo.
