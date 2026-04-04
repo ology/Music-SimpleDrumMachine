@@ -401,7 +401,7 @@ sub _adjust_drums($self, $fill_flag) {
     #     $drums->{snare}{pat} = $pats{snare};
     #     $$toggle = 0; # set to part A
     # }
-    $self->_hats = $self->drums->{hihat}{pat}[0]; # save bit
+    $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
     $self->drums->{crash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
     $self->_adjust_cymbals;
     # $drums->{hihat}{num} = random_note($notes);
