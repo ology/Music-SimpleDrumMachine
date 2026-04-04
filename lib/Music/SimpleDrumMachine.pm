@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0100';
+our $VERSION = '0.0101';
 
 use v5.36;
 use feature 'try';
@@ -23,6 +23,38 @@ use namespace::clean;
   use Music::SimpleDrumMachine ();
 
   my $dm = Music::SimpleDrumMachine->new(verbose => 1);
+
+  my $dm = Music::SimpleDrumMachine->new(
+    port_name => 'midi device',
+    bpm       => 100,
+    next_part => 'part_A',
+    parts     => {
+        part_A => \&part_A,
+        part_B => \&part_B,
+    },
+    verbose => 1,
+  );
+
+  sub part_A {
+      say 'part A';
+      my %patterns = (
+          hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+          kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
+          snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
+      );
+      my $next = 'part_C';
+      return $next, \%patterns;
+  }
+  sub part_B {
+      say 'part B';
+      my %patterns = (
+          hihat => [qw(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)],
+          kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
+          snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
+      );
+      my $next = 'part_A';
+      return $next, \%patterns;
+  }
 
 =head1 DESCRIPTION
 
