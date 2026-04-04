@@ -138,14 +138,14 @@ sub _build_drums {
 
 Code-ref of the part to play for 1/2-bar fills.
 
-Default: \default_part
+Default: \&default_part
 
 =cut
 
 has fill_part => (
     is      => 'ro',
     isa     => sub { croak "$_[0] is not an code-ref" unless ref($_[0]) eq 'CODE' },
-    default => sub { \default_part },
+    default => sub { \&default_part },
 );
 
 =head2 notes
