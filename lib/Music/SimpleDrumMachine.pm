@@ -366,8 +366,8 @@ sub BUILD {
     $SIG{INT} = sub {
         say "\nStop";
         try {
-            $self->_midi_out->panic;
             $self->_midi_out->stop;
+            $self->_midi_out->panic;
         }
         catch ($e) {
             warn "Can't halt the MIDI out device: $e\n";
