@@ -169,9 +169,9 @@ sub _build_drums {
     return $drums;
 }
 
-=head2 fill_part
+=head2 prefill_part
 
-  $fill_part = $dm->fill_part;
+  $prefill_part = $dm->prefill_part;
 
 Code-ref of the part to play for 1/2-bar fills.
 
@@ -179,7 +179,7 @@ Default: C<\&_default_part>
 
 =cut
 
-has fill_part => (
+has prefill_part => (
     is      => 'ro',
     isa     => sub { croak "$_[0] is not an code-ref" unless ref($_[0]) eq 'CODE' },
     default => sub { \&_default_part },
@@ -453,7 +453,7 @@ sub _adjust_drums($self, $fill_flag) {
         my @converted = map { $durations{$_}->@* } @$motif;
         if ($size < $self->divisions) {
             my $div = $self->beats / $size;
-            my ($next, $pats) = $self->fill_part->();
+            my ($next, $pats) = $self->prefill_part->();
             $self->drums->{hihat}{pat} = [ $pats->{hihat}->@[0 .. $div - 1], (0) x $div ];
             $self->drums->{kick}{pat}  = [ $pats->{kick}->@[0 .. $div - 1],  (0) x $div ];
             $self->drums->{snare}{pat} = [ $pats->{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
