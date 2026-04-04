@@ -395,21 +395,21 @@ sub _adjust_drums($self, $fill_flag) {
             $self->drums->{snare}{pat} = \@converted;
         # }
     }
-    for my $part ($self->parts->@*) {
-        my ($next, $patterns);
-        if (ref $part eq 'CODE') {
-            say 'CODE!';
-        }
-        else {
-            say 'Default!';
-            ($next, $patterns) = default_part();
-        }
-        for my $drum (keys %$patterns) {
-            say "$drum $patterns->{$drum}";
-            $self->drums->{$drum}{pat} = $patterns->{$drum};
+    else {
+        for my $part ($self->parts->@*) {
+            my ($next, $patterns);
+            if (ref $part eq 'CODE') {
+                say 'CODE!';
+            }
+            else {
+                say 'Default!';
+                ($next, $patterns) = default_part();
+            }
+            for my $drum (keys %$patterns) {
+                $self->drums->{$drum}{pat} = $patterns->{$drum};
+            }
         }
     }
-    say ddc $self->drums;
     # elsif ($$toggle == 0) {
     #     my %pats = part_A($mcr, $drums, $primes, $beats);
     #     $drums->{hihat}{pat} = $pats{hihat};
