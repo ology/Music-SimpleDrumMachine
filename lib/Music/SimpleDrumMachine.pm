@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0107';
+our $VERSION = '0.0108';
 
 use v5.36;
 use feature 'try';
@@ -360,7 +360,7 @@ sub BUILD {
     my ($self, $args) = @_;
 
     $SIG{INT} = sub {
-        say "\nStop";
+        say "\nStop" if $self->verbose;
         try {
             $self->_midi_out->stop;
             $self->_midi_out->panic;
@@ -492,7 +492,7 @@ sub _random_note($self) {
 }
 
 sub _default_part {
-    say 'Default part!';
+    say 'Default part!' if $self->verbose;
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
