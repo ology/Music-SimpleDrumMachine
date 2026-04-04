@@ -289,7 +289,6 @@ has _midi_out => (
     is      => 'lazy',
     builder => '_build__midi_out',
 );
-
 sub _build__midi_out {
     my ($self) = @_;
     my $midi_out = RtMidiOut->new;
@@ -306,7 +305,6 @@ has _interval => (
     is      => 'lazy',
     builder => '_build__interval',
 );
-
 sub _build__interval {
     my ($self) = @_;
     return 60 / $self->bpm / $self->ppqn;
@@ -316,7 +314,6 @@ has _nth => ( # clocks per 16th-note
     is      => 'lazy',
     builder => '_build__nth',
 );
-
 sub _build__nth {
     my ($self) = @_;
     return $self->ppqn / $self->divisions;
