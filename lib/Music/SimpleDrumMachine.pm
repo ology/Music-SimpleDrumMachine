@@ -210,7 +210,7 @@ sub _build__midi_out {
         $midi_out->open_virtual_port('RtMidiOut');
     }
     catch ($e) {}
-    my $name = $self->name;
+    my $name = $self->port_name;
     $midi_out->open_port_by_name(qr/\Q$name/i);
     return $midi_out;
 }
