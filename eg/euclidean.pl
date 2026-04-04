@@ -2,8 +2,8 @@
 
 # Play and clock an external MIDI device, like a drum machine or sequencer.
 # Examples:
-#   perl clocked-euclidean-drum-fills.pl fluid 90
-#   perl clocked-euclidean-drum-fills.pl usb 100 -1
+#   perl euclidean.pl fluid 90
+#   perl euclidean.pl usb 100 -1
 
 use v5.36;
 
