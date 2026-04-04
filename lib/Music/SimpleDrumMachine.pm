@@ -87,8 +87,8 @@ has chan => (
   $divisions = $dm->divisions;
 
 The number of divisions of a quarter-note into the number of
-beat-notes. That is, the number of divisions of a quarter-note to get
-16ths.
+beat-notes. For the default, this is the number of divisions of a
+quarter-note to get 16ths.
 
 Default: C<4>
 
