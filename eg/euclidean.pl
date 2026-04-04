@@ -11,58 +11,64 @@ use Math::Prime::XS qw(primes);
 use Music::CreatingRhythms ();
 use Music::SimpleDrumMachine ();
 
-my $dm = Music::SimpleDrumMachine->new(
-    port_name => shift || 'usb',
-    bpm       => shift || 120,
-    chan      => shift // 9,
-    verbose   => 1,
-);
-
 my %primes = ( # for computing patterns
-    all  => [ primes($dm->beats) ],
+    all  => [ primes(16) ],
     to_5 => [ primes(5) ],
     to_7 => [ primes(7) ],
 );
 
 my $mcr = Music::CreatingRhythms->new;
 
-sub part_A($dm, $mcr, $primes) {
+my $dm = Music::SimpleDrumMachine->new(
+    port_name => shift || 'usb',
+    bpm       => shift || 120,
+    chan      => shift // 9,
+    next_part => 'part_A',
+    parts     => {
+        part_A => \&part_A,
+        part_B => \&part_B,
+        part_C => \&part_C,
+    },
+    verbose   => 1,
+);
+
+sub part_A {
     say 'part A';
     # choose random primes to use by the hihat, kick, and snare
-    my ($p, $q, $r) = primes_list($primes);
+    my ($p, $q, $r) = primes_list(\%primes);
     my %patterns = (
-        hihat => $mcr->euclid($p, $dm->beats),
-        kick  => $mcr->euclid($q, $dm->beats),
-        snare => $mcr->rotate_n($r, $mcr->euclid(2, $dm->beats)),
+        hihat => $mcr->euclid($p, 16),
+        kick  => $mcr->euclid($q, 16),
+        snare => $mcr->rotate_n($r, $mcr->euclid(2, 16)),
     );
-    my $next = 'B';
-    return $next, %patterns;
+    my $next = 'part_B';
+    return $next, \%patterns;
 }
 
-sub part_B($dm, $mcr, $primes) {
+sub part_B {
     say 'part B';
     # choose a random prime to use by the hihat
-    my ($p) = primes_list($primes);
+    my ($p) = primes_list(\%primes);
     my %patterns = (
-        hihat => $mcr->euclid($p, $dm->beats),
+        hihat => $mcr->euclid($p, 16),
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
     );
-    my $next = 'C';
-    return $next, %patterns;
+    my $next = 'part_C';
+    return $next, \%patterns;
 }
 
-sub part_C($dm, $mcr, $primes) {
+sub part_C {
     say 'part C';
     # choose a random prime to use by the hihat
-    my ($p) = primes_list($primes);
+    my ($p) = primes_list(\%primes);
     my %patterns = (
-        hihat => $mcr->euclid($p, $dm->beats),
+        hihat => $mcr->euclid($p, 16),
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
-    my $next = 'A';
-    return $next, %patterns;
+    my $next = 'part_A';
+    return $next, \%patterns;
 }
 
 sub primes_list($primes) {

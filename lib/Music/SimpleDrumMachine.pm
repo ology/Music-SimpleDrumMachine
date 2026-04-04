@@ -148,6 +148,21 @@ has fill_part => (
     default => sub { \&default_part },
 );
 
+=head2 next_part
+
+  $next_part = $dm->next_part;
+
+Name of the part to play first.
+
+Default: 'default_part'
+
+=cut
+
+has next_part => (
+    is      => 'rw',
+    default => sub { 'default_part' },
+);
+
 =head2 notes
 
   $notes = $dm->notes;
@@ -170,13 +185,13 @@ has notes => (
 
 List of code-refs of the parts to play.
 
-Default: C<[\default_part]>
+Default: C<[\&default_part]>
 
 =cut
 
 has parts => (
     is      => 'rw',
-    default => sub { ['default_part'] },
+    default => sub { { default_part => \&default_part } },
 );
 
 =head2 port_name
@@ -412,18 +427,11 @@ sub _adjust_drums($self, $fill_flag) {
         }
     }
     else {
-        for my $part ($self->parts->@*) {
-            my ($next, $patterns);
-            if (ref $part eq 'CODE') {
-                say 'CODE!';
-            }
-            else {
-                say 'Default!';
-                ($next, $patterns) = default_part();
-            }
-            for my $drum (keys %$patterns) {
-                $self->drums->{$drum}{pat} = $patterns->{$drum};
-            }
+        my $part = $self->parts->{ $self->next_part };
+        my ($next, $patterns) = $part->();
+        $self->next_part($next);
+        for my $drum (keys %$patterns) {
+            $self->drums->{$drum}{pat} = $patterns->{$drum};
         }
     }
     # elsif ($$toggle == 0) {
