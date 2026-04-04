@@ -401,9 +401,9 @@ sub _adjust_drums($self, $fill_flag) {
         if ($size < $self->divisions) {
             my $div = $self->beats / $size;
             my ($next, $pats) = $self->fill_part->();
-            $self->drums->{hihat}{pat} = [ $pats{hihat}->@[0 .. $div - 1], (0) x $div ];
-            $self->drums->{kick}{pat}  = [ $pats{kick}->@[0 .. $div - 1],  (0) x $div ];
-            $self->drums->{snare}{pat} = [ $pats{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+            $self->drums->{hihat}{pat} = [ $pats->{hihat}->@[0 .. $div - 1], (0) x $div ];
+            $self->drums->{kick}{pat}  = [ $pats->{kick}->@[0 .. $div - 1],  (0) x $div ];
+            $self->drums->{snare}{pat} = [ $pats->{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
         }
         else {
             $self->drums->{hihat}{pat} = [ (0) x $self->beats ];
