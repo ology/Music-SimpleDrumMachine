@@ -410,12 +410,12 @@ sub _adjust_drums($self, $fill_flag) {
     # $drums->{crash}{num} = random_note($notes);
 }
 
-sub velocity($self, $min, $max, $offset) {
+sub _velocity($self, $min, $max, $offset) {
     my $random = $offset + int(rand($max - $min + 1)) + $min;
     return $random;
 }
 
-sub random_note($self) {
+sub _random_note($self) {
     my $random = $self->notes->[ int rand $self->notes->@* ] - 24;
     return $random;
 }
