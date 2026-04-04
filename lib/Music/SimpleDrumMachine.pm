@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0104';
+our $VERSION = '0.0105';
 
 use v5.36;
 use feature 'try';
@@ -22,7 +22,11 @@ use namespace::clean;
 
   use Music::SimpleDrumMachine ();
 
-  my $dm = Music::SimpleDrumMachine->new(
+  my $dm = Music::SimpleDrumMachine->new( # use defaults
+    port_name => 'midi device',
+  );
+  # OR:
+  $dm = Music::SimpleDrumMachine->new(
     port_name => 'midi device',
     bpm       => 100,
     next_part => 'part_A',
@@ -241,8 +245,9 @@ Default: C<usb>
 =cut
 
 has port_name => (
-    is      => 'ro',
-    default => sub { 'usb' },
+    is       => 'ro',
+    default  => sub { 'usb' },
+    required => 1,
 );
 
 =head2 ppqn
