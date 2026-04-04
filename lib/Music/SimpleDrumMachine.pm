@@ -492,7 +492,7 @@ sub _random_note($self) {
 }
 
 sub _default_part {
-    say 'Default part!' if $self->verbose;
+    say 'Default part!';
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
