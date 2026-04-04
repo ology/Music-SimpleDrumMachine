@@ -6,7 +6,6 @@ our $VERSION = '0.0108';
 
 use v5.36;
 use feature 'try';
-no warnings 'experimental::try';
 
 use Moo;
 use strictures 2;
