@@ -3,6 +3,7 @@ Revision history for Music-SimpleDrumMachine
 {{$NEXT}}
     - Add the extra-handy eg/list_devices.pl program.
     - Improve documentation.
+    - Fix the eg/add-drum.pl program.
 
 0.0306 2026-04-05 11:30:01
     - Improve documentation.
