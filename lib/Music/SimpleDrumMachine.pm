@@ -63,10 +63,10 @@ no warnings 'experimental::try';
   sub fill_A {
       say 'fill_A';
       my %patterns = (
+          snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 0)],
           hihat => [ (0) x 16 ],
           open  => [ (0) x 16 ],
           kick  => [ (0) x 16 ],
-          snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 0)],
           tom   => [ (0) x 16 ],
       );
       my $next = 'fill_A';
