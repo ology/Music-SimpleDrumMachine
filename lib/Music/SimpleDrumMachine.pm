@@ -692,6 +692,18 @@ sub _default_fill($self) {
     return $next, \%patterns;
 }
 
+=head2 velocity
+
+  $dm->velocity($min, $max, $offset);
+
+Return a random velocity between the minimum and maximum, starting at
+offset.
+
+So, for C<-10, 10, 110>, a number between C<100> and C<120> will be
+returned. The triple C<0, 0, 127> will return C<127> everytime.
+
+=cut
+
 sub velocity($self, $min, $max, $offset) {
     my $random = $offset + int(rand($max - $min + 1)) + $min;
     return $random;
