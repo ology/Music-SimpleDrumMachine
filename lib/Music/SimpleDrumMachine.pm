@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0300';
+our $VERSION = '0.0301';
 
 use v5.36;
 use feature 'try';
@@ -86,7 +86,7 @@ real-time.
   add_drums => \%drums,
 
 Add an array-ref of hash-refs of the form
-C<[{ drum =E<gt> 'name', num => midi_num, chan => channel }]>
+C<[{ drum =E<gt> 'name', num =E<gt> midi_num, chan =E<gt> channel }]>
 to the known drums in the constructor. The B<chan> key is optional
 and is only necessary if you want to assign a drum to a specific
 channel.

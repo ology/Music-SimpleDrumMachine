@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Fix documentation.
 
 0.0300 2026-04-05 08:42:38
     - Make fills user defined.
