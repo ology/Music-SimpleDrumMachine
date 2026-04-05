@@ -2,6 +2,7 @@ Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
     - Improve documentation.
+    - A bit of code cleanup.
 
 0.0400 2026-04-05 12:54:27
     - Fix the fill-crash handling logic.
