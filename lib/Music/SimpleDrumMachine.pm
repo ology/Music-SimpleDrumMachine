@@ -555,6 +555,7 @@ sub _adjust_cymbals($self) {
 sub _adjust_drums($self, $fill_flag) {
     say 'Beats: ' . $self->_beat_count if $self->verbose;
     my ($next, $patterns);
+    # play a fill or a part
     if ($self->filling && $fill_flag) {
         my $fill = $self->fills->{ $self->next_fill };
         ($next, $patterns) = $fill->();
@@ -565,17 +566,21 @@ sub _adjust_drums($self, $fill_flag) {
         ($next, $patterns) = $part->();
         $self->next_part($next);
     }
+    # add the patterns to the drums
     for my $drum (keys %$patterns) {
         $self->drums->{$drum}{pat} = $patterns->{$drum};
     }
+    # add zero-patterns to the unused drums
     for my $drum (keys $self->drums->%*) {
         unless (exists $patterns->{$drum}) {
             $self->drums->{$drum}{pat} = [ (0) x $self->beats ];
         }
     }
-    $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
-    $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
-    $self->_adjust_cymbals if $self->filling;
+    if ($self->filling) {
+        $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
+        $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
+        $self->_adjust_cymbals;
+    }
     # if ($self->chan < 0) {
     #     $drums->{hihat}{num} = $self->_random_note($notes);
     #     $drums->{kick}{num}  = $self->_random_note($notes);
