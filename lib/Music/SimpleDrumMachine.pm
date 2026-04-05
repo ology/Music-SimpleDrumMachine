@@ -557,10 +557,8 @@ sub BUILD {
                 }
                 for my $drum (keys $self->drums->%*) { # fill the queue
                     if ($self->drums->{$drum}{pat}[ $self->_beat_count % scalar($self->drums->{$drum}{pat}->@*) ]) {
-                        push $self->_queue->@*, {
-                            drum     => $drum,
-                            velocity => $self->velocity($self->velo_min, $self->velo_max, $self->velo_off),
-                        };
+                        my $velo = $self->velocity($self->velo_min, $self->velo_max, $self->velo_off);
+                        push $self->_queue->@*, { drum => $drum, velocity => $velo };
                     }
                 }
                 for my $drum ($self->_queue->@*) { # play the queue

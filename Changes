@@ -2,6 +2,7 @@ Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
     - Don't change the notes.
+    - Intelligently handle the velocity.
 
 0.0401 2026-04-05 14:43:52
     - Improve documentation and code comments.

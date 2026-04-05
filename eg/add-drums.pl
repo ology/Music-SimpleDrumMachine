@@ -26,6 +26,9 @@ my $dm = Music::SimpleDrumMachine->new(
     fills      => { fill_A => \&fill_A },
     next_fill  => 'fill_A',
     fill_crash => 0,
+    velo_min   => 0,
+    velo_max   => 0,
+    velo_off   => 127,
     verbose    => 1,
 );
 
