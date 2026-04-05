@@ -69,7 +69,8 @@ real-time.
 
 =head2 add_drums
 
-Add a hash-ref of the form C<{ drum =E<gt> midi_num, ... }> to the known drums.
+Add a hash-ref of the form C<{ drum =E<gt> midi_num, ... }> to the
+known drums.
 
 =cut
 
