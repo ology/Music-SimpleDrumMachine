@@ -547,5 +547,4 @@ L<Moo>
 
 L<Music::Duration::Partition>
 
-
 =cut
