@@ -211,7 +211,7 @@ sub _build_drums {
 
 List of code-refs of the fills to play.
 
-Default: C<_default_fill()>
+Default: C<[_default_fill()]>
 
 =cut
 
@@ -295,7 +295,7 @@ has notes => (
 
 List of code-refs of the parts to play.
 
-Default: C<_default_part()>
+Default: C<[_default_part()]>
 
 =cut
 
