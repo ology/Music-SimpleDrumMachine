@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0201 2026-04-04 21:47:22
     - Fix channel selection logic when adding a new drum.
 
 0.0200 2026-04-04 21:42:59
