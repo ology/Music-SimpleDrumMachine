@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Make fills user defined.
 
 0.0204 2026-04-05 00:28:58
     - Make the fills optional with the filling attribute.

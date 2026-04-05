@@ -35,6 +35,8 @@ no warnings 'experimental::try';
         part_A => \&part_A,
         part_B => \&part_B,
     },
+    fills     => { fill_A => \&fill_A },
+    next_fill => 'fill_A',
     verbose => 1,
   );
 
@@ -56,6 +58,18 @@ no warnings 'experimental::try';
           snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
       );
       my $next = 'part_A';
+      return $next, \%patterns;
+  }
+  sub fill_A {
+      say 'fill_A';
+      my %patterns = (
+          hihat => [ (0) x 16 ],
+          open  => [ (0) x 16 ],
+          kick  => [ (0) x 16 ],
+          snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 0)],
+          tom   => [ (0) x 16 ],
+      );
+      my $next = 'fill_A';
       return $next, \%patterns;
   }
 
@@ -190,6 +204,22 @@ sub _build_drums {
     return $drums;
 }
 
+=head2 fills
+
+  $fills = $dm->fills;
+  $dm->fills($fills);
+
+List of code-refs of the fills to play.
+
+Default: C<[\&_default_fill]>
+
+=cut
+
+has fills => (
+    is      => 'rw',
+    default => sub { { _default_fill => \&_default_fill } },
+);
+
 =head2 filling
 
   $filling = $dm->filling;
@@ -205,12 +235,28 @@ has filling => (
     default => sub { 1 },
 );
 
+=head2 next_fill
+
+  $next_fill = $dm->next_fill;
+  $dm->next_fill($next_fill);
+
+Name of the fill to play first and set subsequently in a fill.
+
+Default: C<'_default_fill'>
+
+=cut
+
+has next_fill => (
+    is      => 'rw',
+    default => sub { '_default_fill' },
+);
+
 =head2 next_part
 
   $next_part = $dm->next_part;
   $dm->next_part($next_part);
 
-Name of the part to play first.
+Name of the part to play first and set subsequently in a part.
 
 Default: C<'_default_part'>
 
@@ -478,7 +524,12 @@ sub _adjust_cymbals($self) {
 sub _adjust_drums($self, $fill_flag) {
     say 'Beats: ' . $self->_beat_count if $self->verbose;
     if ($self->filling && $fill_flag) {
-        $self->_fill;
+        my $fill = $self->fills->{ $self->next_fill };
+        my ($next, $patterns) = $fill->();
+        $self->next_fill($next);
+        for my $drum (keys %$patterns) {
+            $self->drums->{$drum}{pat} = $patterns->{$drum};
+        }
     }
     else {
         my $part = $self->parts->{ $self->next_part };
@@ -497,7 +548,7 @@ sub _adjust_drums($self, $fill_flag) {
     # $drums->{crash}{num} = $self->_random_note($notes);
 }
 
-sub _fill($self) {
+sub _default_fill($self) {
     say 'fill' if $self->verbose;
     my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
     say "size: $size" if $self->verbose;
@@ -514,28 +565,31 @@ sub _fill($self) {
     );
     my $motif = $mdp->motif;
     my @converted = map { $durations{$_}->@* } @$motif;
+    my %patterns;
     if ($size < $self->divisions) {
         my $div = $self->beats / $size;
         my ($next, $pats) = $self->prefill_part->();
         for my $drum (keys $self->drums->%*) {
             if ($drum eq 'snare') {
-                $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+                $patterns{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
             }
             else {
-                $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
+                $patterns{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
             }
         }
     }
     else {
         for my $drum (keys $self->drums->%*) {
             if ($drum eq 'snare') {
-                $self->drums->{$drum}{pat} = \@converted;
+                $patterns{$drum}{pat} = \@converted;
             }
             else {
-                $self->drums->{$drum}{pat} = [ (0) x $self->beats ];
+                $patterns{$drum}{pat} = [ (0) x $self->beats ];
             }
         }
     }
+    my $next = '_default_fill';
+    return $next, \%patterns;
 }
 
 sub _velocity($self, $min, $max, $offset) {
