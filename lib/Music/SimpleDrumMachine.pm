@@ -82,6 +82,9 @@ real-time.
 
 * Triplets are not supported. Boo!
 
+* Use the extra-handy eg/list_devices.pl program to see the names of
+the open MIDI ports on the system.
+
 =head1 ATTRIBUTES
 
 =head2 add_drums
