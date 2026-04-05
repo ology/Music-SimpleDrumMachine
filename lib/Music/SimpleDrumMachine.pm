@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0402';
+our $VERSION = '0.0403';
 
 use v5.36;
 use feature 'try';
