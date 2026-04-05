@@ -548,6 +548,17 @@ sub _adjust_drums($self, $fill_flag) {
     # $drums->{crash}{num} = $self->_random_note($notes);
 }
 
+sub _default_part {
+    # say 'Default part!';
+    my %patterns = (
+        hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+        kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
+        snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
+    );
+    my $next = '_default_part';
+    return $next, \%patterns;
+}
+
 sub _default_fill($self) {
     say 'fill' if $self->verbose;
     my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
@@ -600,17 +611,6 @@ sub _velocity($self, $min, $max, $offset) {
 sub _random_note($self) {
     my $random = $self->notes->[ int rand $self->notes->@* ] - 24;
     return $random;
-}
-
-sub _default_part {
-    # say 'Default part!';
-    my %patterns = (
-        hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
-        kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
-        snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
-    );
-    my $next = '_default_part';
-    return $next, \%patterns;
 }
 
 1;
