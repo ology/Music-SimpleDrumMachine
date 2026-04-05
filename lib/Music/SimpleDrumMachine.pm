@@ -508,6 +508,8 @@ __END__
 
 =head1 SEE ALSO
 
+The F<eg/*.pl> programs in this distribution.
+
 L<IO::Async::Loop>
 
 L<IO::Async::Timer::Periodic>
