@@ -69,10 +69,10 @@ real-time.
 
 =head2 add_drums
 
-  $dm->add_drums(\%drums);
+  add_drums => \%drums,
 
 Add a hash-ref of the form C<{ drum =E<gt> midi_num, ... }> to the
-known drums.
+known drums in the constructor.
 
 =cut
 
