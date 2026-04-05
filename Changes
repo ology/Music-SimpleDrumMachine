@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Enhance the fill in the add-drum.pl program.
 
 0.0303 2026-04-05 09:56:36
     - Uncomment debugging measure. Argh!

@@ -36,11 +36,11 @@ sub part_A {
 sub fill_A {
     say 'fill_A';
     my %patterns = (
-        snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 0)],
+        snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 0 0)],
+        tom   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1)],
         hihat => [ (0) x 16 ],
         open  => [ (0) x 16 ],
         kick  => [ (0) x 16 ],
-        tom   => [ (0) x 16 ],
     );
     my $next = 'fill_A';
     return $next, \%patterns;
