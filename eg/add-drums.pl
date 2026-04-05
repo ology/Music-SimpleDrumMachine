@@ -1,8 +1,5 @@
 #!/usr/bin/env perl
-
 use v5.36;
-
-use Data::Dumper::Compact qw(ddc);
 use Music::SimpleDrumMachine ();
 
 my $port_name = shift || 'usb';
