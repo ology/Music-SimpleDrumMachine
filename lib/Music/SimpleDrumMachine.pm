@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0202';
+our $VERSION = '0.0203';
 
 use v5.36;
 use feature 'try';
@@ -71,15 +71,18 @@ real-time.
 
   add_drums => \%drums,
 
-Add a hash-ref of the form C<{ drum =E<gt> midi_num, ... }> to the
-known drums in the constructor.
+Add an array-ref of hash-refs of the form
+C<[{ drum =E<gt> 'name', num => midi_num, chan => channel }]>
+to the known drums in the constructor. The B<chan> key is optional
+and is only necessary if you want to assign a drum to a specific
+channel.
 
 =cut
 
 has add_drums => (
     is      => 'rw',
-    isa     => sub { croak "$_[0] is not a hash-ref" unless ref($_[0]) eq 'HASH' },
-    default => sub { {} },
+    isa     => sub { croak "$_[0] is not an array-ref" unless ref($_[0]) eq 'ARRAY' },
+    default => sub { [] },
 );
 
 =head2 beats
@@ -389,16 +392,11 @@ sub BUILD {
         exit;
     };
 
-    if ($args->{add_drums}) {
-        my $drums = $self->drums;
-        my $chan = keys $self->drums->%*;
-        for my $drum (keys $args->{add_drums}->%*) {
-            $drums->{$drum} = {
-                num  => $args->{add_drums}->{$drum},
-                chan => $self->chan < 0 ? $chan++ : $self->chan,
-                pat  => [],
-            };
-        }
+    # any drums to add?
+    my $n = keys $self->drums->%*;
+    for my $drum ($args->{add_drums}->@*) {
+        my $chan = defined $drum->{chan} ? $drum->{chan} : $self->chan < 0 ? $n++ : $self->chan;
+        $self->drums->{ $drum->{drum} } = { num  => $drum->{num}, chan => $chan, pat  => [] };
     }
 
     my $timer = IO::Async::Timer::Periodic->new(

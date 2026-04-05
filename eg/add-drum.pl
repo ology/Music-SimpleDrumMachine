@@ -15,7 +15,7 @@ my $dm = Music::SimpleDrumMachine->new(
     chan      => $chan,
     next_part => 'part_A',
     parts     => { part_A => \&part_A },
-    add_drums => { tom => 47 },
+    add_drums => [ { drum => 'tom', num => 47 } ],
     verbose   => 1,
 );
 
@@ -26,7 +26,7 @@ sub part_A {
         open  => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
-        tom   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1)],
+        tom   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0)],
     );
     my $next = 'part_A';
     return $next, \%patterns;
