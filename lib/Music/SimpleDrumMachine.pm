@@ -581,12 +581,12 @@ sub _adjust_drums($self, $fill_flag) {
         $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
         $self->_adjust_cymbals;
     }
-    # if ($self->chan < 0) {
-    #     $drums->{hihat}{num} = $self->_random_note($notes);
-    #     $drums->{kick}{num}  = $self->_random_note($notes);
-    #     $drums->{snare}{num} = $self->_random_note($notes);
-    #     $drums->{crash}{num} = $self->_random_note($notes);
-    # }
+    if ($self->chan < 0) { # multi-timbral, so why not?
+        $self->drums->{hihat}{num} = $self->_random_note($self->notes);
+        $self->drums->{kick}{num}  = $self->_random_note($self->notes);
+        $self->drums->{snare}{num} = $self->_random_note($self->notes);
+        $self->drums->{crash}{num} = $self->_random_note($self->notes);
+    }
 }
 
 sub _default_part($self) {
