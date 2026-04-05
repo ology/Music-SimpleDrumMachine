@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Fix the fill-crash handling logic.
     - Enhance the the eg/add-drums.pl program.
 
 0.0307 2026-04-05 11:46:27
