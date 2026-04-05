@@ -26,6 +26,7 @@ no warnings 'experimental::try';
   my $dm = Music::SimpleDrumMachine->new( # use defaults
     port_name => 'midi device',
   );
+
   # OR:
   $dm = Music::SimpleDrumMachine->new(
     port_name => 'midi device',
