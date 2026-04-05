@@ -1,7 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
-    - Automatically account for uncustomized drums in the default part.
+    - Automatically account for uncustomized drums.
 
 0.0304 2026-04-05 10:20:23
     - Enhance the fill in the add-drum.pl program.
