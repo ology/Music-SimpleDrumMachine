@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Uncomment debugging measure. Argh!
 
 0.0302 2026-04-05 09:51:21
     - Fix _default_part() and _default_fill() logic.
