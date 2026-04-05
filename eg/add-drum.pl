@@ -16,8 +16,8 @@ my $dm = Music::SimpleDrumMachine->new(
     add_drums => [ { drum => 'tom', num => 47 } ],
     next_part => 'part_A',
     parts     => { part_A => \&part_A },
-    fills     => { fill_A => \&fill_A },
-    next_fill => 'fill_A',
+    # fills     => { fill_A => \&fill_A },
+    # next_fill => 'fill_A',
     verbose   => 1,
 );
 

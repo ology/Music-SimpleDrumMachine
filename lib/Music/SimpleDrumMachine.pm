@@ -211,14 +211,18 @@ sub _build_drums {
 
 List of code-refs of the fills to play.
 
-Default: C<[\&_default_fill]>
+Default: C<_default_fill()>
 
 =cut
 
 has fills => (
-    is      => 'rw',
-    default => sub { { _default_fill => \&_default_fill } },
+    is      => 'lazy',
+    builder => '_build_fills',
 );
+sub _build_fills {
+    my ($self) = @_;
+    return { _default_fill => sub { $self->_default_fill } };
+}
 
 =head2 filling
 
@@ -291,14 +295,18 @@ has notes => (
 
 List of code-refs of the parts to play.
 
-Default: C<[\&_default_part]>
+Default: C<_default_part()>
 
 =cut
 
 has parts => (
-    is      => 'rw',
-    default => sub { { _default_part => \&_default_part } },
+    is      => 'lazy',
+    builder => '_build_parts',
 );
+sub _build_parts {
+    my ($self) = @_;
+    return { _default_part => sub { $self->_default_part } };
+}
 
 =head2 port_name
 
@@ -542,16 +550,19 @@ sub _adjust_drums($self, $fill_flag) {
     $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
     $self->drums->{crash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
     $self->_adjust_cymbals if $self->filling;
-    # $drums->{hihat}{num} = $self->_random_note($notes);
-    # $drums->{kick}{num}  = $self->_random_note($notes);
-    # $drums->{snare}{num} = $self->_random_note($notes);
-    # $drums->{crash}{num} = $self->_random_note($notes);
+    # if ($self->chan < 0) {
+    #     $drums->{hihat}{num} = $self->_random_note($notes);
+    #     $drums->{kick}{num}  = $self->_random_note($notes);
+    #     $drums->{snare}{num} = $self->_random_note($notes);
+    #     $drums->{crash}{num} = $self->_random_note($notes);
+    # }
 }
 
-sub _default_part {
-    # say 'Default part!';
+sub _default_part($self) {
+    say '_default_part' if $self->verbose;
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+        open  => [ (0) x $self->beats ],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
@@ -560,7 +571,7 @@ sub _default_part {
 }
 
 sub _default_fill($self) {
-    say 'fill' if $self->verbose;
+    say '_default_fill' if $self->verbose;
     my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
     say "size: $size" if $self->verbose;
     my %durations = (
@@ -579,23 +590,23 @@ sub _default_fill($self) {
     my %patterns;
     if ($size < $self->divisions) {
         my $div = $self->beats / $size;
-        my ($next, $pats) = $self->prefill_part->();
+        my ($next, $pats) = $self->prefill_part->($self);
         for my $drum (keys $self->drums->%*) {
             if ($drum eq 'snare') {
-                $patterns{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+                $patterns{$drum} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
             }
             else {
-                $patterns{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
+                $patterns{$drum} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
             }
         }
     }
     else {
         for my $drum (keys $self->drums->%*) {
             if ($drum eq 'snare') {
-                $patterns{$drum}{pat} = \@converted;
+                $patterns{$drum} = \@converted;
             }
             else {
-                $patterns{$drum}{pat} = [ (0) x $self->beats ];
+                $patterns{$drum} = [ (0) x $self->beats ];
             }
         }
     }
