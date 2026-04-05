@@ -204,6 +204,23 @@ sub _build_drums {
     return $drums;
 }
 
+=head2 fill_crash
+
+  $fill_crash = $dm->fill_crash;
+  $dm->fill_crash($boolean);
+
+Do we crash after a fill?
+
+Default: C<1>
+
+=cut
+
+has fill_crash => (
+    is      => 'rw',
+    isa     => sub { croak "$_[0] is not a boolean" unless $_[0] =~ /^[01]$/ },
+    default => sub { 1 },
+);
+
 =head2 fills
 
   $fills = $dm->fills;
@@ -230,6 +247,8 @@ sub _build_fills {
   $dm->filling($boolean);
 
 Do we fill between parts?
+
+Default: C<1>
 
 =cut
 
@@ -361,6 +380,8 @@ has prefill_part => (
   $verbose = $dm->verbose;
 
 Show progress.
+
+Default: C<0>
 
 =cut
 
@@ -518,13 +539,15 @@ sub BUILD {
 }
 
 sub _adjust_cymbals($self) {
-    if ($self->_filled) {
-        $self->drums->{fillcrash}{pat}[0] = 1; # crash on one
-        $self->drums->{hihat}{pat}[0] = 0; # mutually exclusive
-    }
-    else {
-        $self->drums->{fillcrash}{pat}[0] = 0; # not crashing
-        $self->drums->{hihat}{pat}[0] = $self->_hats; # restore hihat bit
+    if ($self->fill_crash) {
+        if ($self->_filled) {
+            $self->drums->{fillcrash}{pat}[0] = 1; # crash on one
+            $self->drums->{hihat}{pat}[0] = 0; # mutually exclusive
+        }
+        else {
+            $self->drums->{fillcrash}{pat}[0] = 0; # not crashing
+            $self->drums->{hihat}{pat}[0] = $self->_hats; # restore hihat bit
+        }
     }
     $self->_filled(0);
 }
