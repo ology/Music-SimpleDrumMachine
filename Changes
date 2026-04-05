@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0304 2026-04-05 10:20:23
     - Enhance the fill in the add-drum.pl program.
     - Add the missing open-hh to the eg/euclidean.pl program.
 
