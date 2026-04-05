@@ -209,7 +209,7 @@ sub _build_drums {
   $fill_crash = $dm->fill_crash;
   $dm->fill_crash($boolean);
 
-Do we crash after a fill?
+Should we crash after a fill?
 
 Default: C<1>
 
@@ -246,7 +246,7 @@ sub _build_fills {
   $filling = $dm->filling;
   $dm->filling($boolean);
 
-Do we fill between parts?
+Shall we fill between parts?
 
 Default: C<1>
 
