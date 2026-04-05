@@ -30,8 +30,7 @@ my $dm = Music::SimpleDrumMachine->new(
         part_B => \&part_B,
         part_C => \&part_C,
     },
-    # fill_crash => 0,
-    verbose    => 1,
+    verbose => 1,
 );
 
 sub part_A {
