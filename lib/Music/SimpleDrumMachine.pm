@@ -67,6 +67,18 @@ real-time.
 
 =head1 ATTRIBUTES
 
+=head2 add_drums
+
+Add a hash-ref of the form C<{ drum =gt midi_num }> to the known drums.
+
+=cut
+
+has add_drums => (
+    is      => 'rw',
+    isa     => sub { croak "$_[0] is not a hash-ref" unless ref($_[0]) eq 'HASH' },
+    default => sub { {} },
+);
+
 =head2 beats
 
   $beats = $dm->beats;
@@ -373,6 +385,18 @@ sub BUILD {
         }
         exit;
     };
+
+    if ($args->{add_drums}) {
+        my $drums = $self->drums;
+        my $chan = keys $self->drums->%*;
+        for my $drum (keys $args->{add_drums}->%*) {
+            $drums->{$drum} = {
+                num  => $args->{add_drums}->{$drum},
+                chan => $chan++,
+                pat  => [],
+            };
+        }
+    }
 
     my $timer = IO::Async::Timer::Periodic->new(
         interval => $self->_interval,

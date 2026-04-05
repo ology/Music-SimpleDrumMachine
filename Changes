@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Add an 'add_drums' attribute.
+    - Simplify the add-drum.pl code.
 
 0.0111 2026-04-04 21:02:33
     - Simplify the open-hh.pl code.
