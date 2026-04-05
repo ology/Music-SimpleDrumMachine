@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0111 2026-04-04 21:02:33
     - Simplify the open-hh.pl code.
     - Add the open hihat to the known drums.
     - Add the eg/add-drum.pl example program.
