@@ -18,12 +18,12 @@ my $dm = Music::SimpleDrumMachine->new(
         { drum => 'open', num => 46 },
         { drum => 'china', num => 52 },
     ],
-    parts     => { part_A => \&part_A },
-    next_part => 'part_A',
-    fills     => { fill_A => \&fill_A },
-    next_fill => 'fill_A',
-    # fill_crash => 0,
-    verbose   => 1,
+    parts      => { part_A => \&part_A },
+    next_part  => 'part_A',
+    fills      => { fill_A => \&fill_A },
+    next_fill  => 'fill_A',
+    fill_crash => 0,
+    verbose    => 1,
 );
 
 sub part_A {
