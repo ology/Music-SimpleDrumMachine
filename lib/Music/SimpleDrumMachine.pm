@@ -698,7 +698,7 @@ Return a random velocity between the minimum and maximum, starting at
 offset.
 
 So, for C<-10, 10, 110>, a number between C<100> and C<120> will be
-returned. The triple C<0, 0, 127> will return C<127> everytime.
+returned. The triple C<0, 0, 127> will return C<127> every time.
 
 =cut
 
