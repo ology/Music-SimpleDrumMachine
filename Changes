@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Fix channel selection logic when adding a new drum.
 
 0.0200 2026-04-04 21:42:59
     - Add an 'add_drums' attribute.
