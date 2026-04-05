@@ -391,6 +391,57 @@ has verbose => (
     default => sub { 0 },
 );
 
+=head2 velo_max
+
+  $velo_max = $dm->velo_max;
+  $dm->velo_max($max);
+
+The maximum allowed relative velocity from the B<velo_off> offset.
+
+Default: C<10>
+
+=cut
+
+has velo_max => (
+    is      => 'rw',
+    isa     => sub { croak "$_[0] is not valid" unless $_[0] =~ /^\d+$/ },
+    default => sub { 10 },
+);
+
+=head2 velo_min
+
+  $velo_min = $dm->velo_min;
+  $dm->velo_min($min);
+
+The minimum allowed relative velocity from the B<velo_off> offset.
+
+Default: C<-10>
+
+=cut
+
+has velo_min => (
+    is      => 'rw',
+    isa     => sub { croak "$_[0] is not valid" unless $_[0] =~ /^-?\d+$/ },
+    default => sub { -10 },
+);
+
+=head2 velo_off
+
+  $velo_off = $dm->velo_off;
+  $dm->velo_off($offset);
+
+The velocity offset.
+
+Default: C<110>
+
+=cut
+
+has velo_off => (
+    is      => 'rw',
+    isa     => sub { croak "$_[0] is not valid" unless $_[0] =~ /^\d+$/ },
+    default => sub { 110 },
+);
+
 has _queue => (
     is      => 'rw',
     default => sub { [] },
@@ -506,7 +557,10 @@ sub BUILD {
                 }
                 for my $drum (keys $self->drums->%*) { # fill the queue
                     if ($self->drums->{$drum}{pat}[ $self->_beat_count % scalar($self->drums->{$drum}{pat}->@*) ]) {
-                        push $self->_queue->@*, { drum => $drum, velocity => $self->_velocity(-10, 10, 110) };
+                        push $self->_queue->@*, {
+                            drum     => $drum,
+                            velocity => $self->velocity($self->velo_min, $self->velo_max, $self->velo_off),
+                        };
                     }
                 }
                 for my $drum ($self->_queue->@*) { # play the queue
@@ -638,7 +692,7 @@ sub _default_fill($self) {
     return $next, \%patterns;
 }
 
-sub _velocity($self, $min, $max, $offset) {
+sub velocity($self, $min, $max, $offset) {
     my $random = $offset + int(rand($max - $min + 1)) + $min;
     return $random;
 }
