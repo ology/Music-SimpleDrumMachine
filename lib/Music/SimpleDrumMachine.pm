@@ -65,10 +65,6 @@ no warnings 'experimental::try';
       print "fill_A\n";
       my %patterns = (
           snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 0)],
-          hihat => [ (0) x 16 ],
-          open  => [ (0) x 16 ],
-          kick  => [ (0) x 16 ],
-          tom   => [ (0) x 16 ],
       );
       my $next = 'fill_A';
       return $next, \%patterns;
@@ -187,8 +183,7 @@ Default:
   kick  => { num => 36, chan => ..., pat => [] },
   snare => { num => 38, chan => ..., pat => [] },
   hihat => { num => 42, chan => ..., pat => [] },
-  open  => { num => 46, chan => ..., pat => [] },
-  crash => { num => 49, chan => ..., pat => [] },
+  fillcrash => { num => 49, chan => ..., pat => [] },
 
 =cut
 
@@ -204,8 +199,7 @@ sub _build_drums {
         kick  => { num => 36, chan => $self->chan < 0 ? 0 : $self->chan, pat => [] },
         snare => { num => 38, chan => $self->chan < 0 ? 1 : $self->chan, pat => [] },
         hihat => { num => 42, chan => $self->chan < 0 ? 2 : $self->chan, pat => [] },
-        open  => { num => 46, chan => $self->chan < 0 ? 3 : $self->chan, pat => [] },
-        crash => { num => 49, chan => $self->chan < 0 ? 4 : $self->chan, pat => [] },
+        fillcrash => { num => 49, chan => $self->chan < 0 ? 3 : $self->chan, pat => [] },
     };
     return $drums;
 }
@@ -525,11 +519,11 @@ sub BUILD {
 
 sub _adjust_cymbals($self) {
     if ($self->_filled) {
-        $self->drums->{crash}{pat}[0] = 1; # crash on one
+        $self->drums->{fillcrash}{pat}[0] = 1; # crash on one
         $self->drums->{hihat}{pat}[0] = 0; # mutually exclusive
     }
     else {
-        $self->drums->{crash}{pat}[0] = 0; # not crashing
+        $self->drums->{fillcrash}{pat}[0] = 0; # not crashing
         $self->drums->{hihat}{pat}[0] = $self->_hats; # restore hihat bit
     }
     $self->_filled(0);
@@ -557,7 +551,7 @@ sub _adjust_drums($self, $fill_flag) {
         }
     }
     $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
-    $self->drums->{crash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
+    $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
     $self->_adjust_cymbals if $self->filling;
     # if ($self->chan < 0) {
     #     $drums->{hihat}{num} = $self->_random_note($notes);
