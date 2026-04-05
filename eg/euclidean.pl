@@ -39,7 +39,6 @@ sub part_A {
     my ($p, $q, $r) = primes_list(\%primes);
     my %patterns = (
         hihat => $mcr->euclid($p, 16),
-        open  => [ (0) x 16 ],
         kick  => $mcr->euclid($q, 16),
         snare => $mcr->rotate_n($r, $mcr->euclid(2, 16)),
     );
@@ -53,7 +52,6 @@ sub part_B {
     my ($p) = primes_list(\%primes);
     my %patterns = (
         hihat => $mcr->euclid($p, 16),
-        open  => [ (0) x 16 ],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
     );

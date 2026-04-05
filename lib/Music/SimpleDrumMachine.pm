@@ -531,20 +531,23 @@ sub _adjust_cymbals($self) {
 
 sub _adjust_drums($self, $fill_flag) {
     say 'Beats: ' . $self->_beat_count if $self->verbose;
+    my ($next, $patterns);
     if ($self->filling && $fill_flag) {
         my $fill = $self->fills->{ $self->next_fill };
-        my ($next, $patterns) = $fill->();
+        ($next, $patterns) = $fill->();
         $self->next_fill($next);
-        for my $drum (keys %$patterns) {
-            $self->drums->{$drum}{pat} = $patterns->{$drum};
-        }
     }
     else {
         my $part = $self->parts->{ $self->next_part };
-        my ($next, $patterns) = $part->();
+        ($next, $patterns) = $part->();
         $self->next_part($next);
-        for my $drum (keys %$patterns) {
-            $self->drums->{$drum}{pat} = $patterns->{$drum};
+    }
+    for my $drum (keys %$patterns) {
+        $self->drums->{$drum}{pat} = $patterns->{$drum};
+    }
+    for my $drum (keys $self->drums->%*) {
+        unless (exists $patterns->{$drum}) {
+            $self->drums->{$drum}{pat} = [ (0) x $self->beats ];
         }
     }
     $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
@@ -562,7 +565,6 @@ sub _default_part($self) {
     say '_default_part' if $self->verbose;
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
-        open  => [ (0) x $self->beats ],
         kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
