@@ -13,6 +13,7 @@ my $dm = Music::SimpleDrumMachine->new(
     port_name => $port_name,
     bpm       => $bpm,
     chan      => $chan,
+    # filling   => 0,
     next_part => 'part_A',
     parts     => { part_A => \&part_A },
     add_drums => [ { drum => 'tom', num => 47 } ],

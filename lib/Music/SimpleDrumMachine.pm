@@ -190,20 +190,19 @@ sub _build_drums {
     return $drums;
 }
 
-=head2 prefill_part
+=head2 filling
 
-  $prefill_part = $dm->prefill_part;
+  $filling = $dm->filling;
+  $dm->filling($boolean);
 
-Code-ref of the part to play for 1/2-bar fills.
-
-Default: C<\&_default_part>
+Do we fill between parts?
 
 =cut
 
-has prefill_part => (
-    is      => 'ro',
-    isa     => sub { croak "$_[0] is not an code-ref" unless ref($_[0]) eq 'CODE' },
-    default => sub { \&_default_part },
+has filling => (
+    is      => 'rw',
+    isa     => sub { croak "$_[0] is not a boolean" unless $_[0] =~ /^[01]$/ },
+    default => sub { 1 },
 );
 
 =head2 next_part
@@ -285,6 +284,22 @@ has ppqn => (
     is      => 'ro',
     isa     => sub { croak "$_[0] is not an integer" unless $_[0] =~ /^\d+$/ },
     default => sub { 24 },
+);
+
+=head2 prefill_part
+
+  $prefill_part = $dm->prefill_part;
+
+Code-ref of the part to play for 1/2-bar fills.
+
+Default: C<\&_default_part>
+
+=cut
+
+has prefill_part => (
+    is      => 'ro',
+    isa     => sub { croak "$_[0] is not an code-ref" unless ref($_[0]) eq 'CODE' },
+    default => sub { \&_default_part },
 );
 
 =head2 verbose
@@ -462,7 +477,7 @@ sub _adjust_cymbals($self) {
 
 sub _adjust_drums($self, $fill_flag) {
     say 'Beats: ' . $self->_beat_count if $self->verbose;
-    if ($fill_flag) {
+    if ($self->filling && $fill_flag) {
         say 'fill' if $self->verbose;
         my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
         say "size: $size" if $self->verbose;
@@ -502,7 +517,7 @@ sub _adjust_drums($self, $fill_flag) {
     }
     $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
     $self->drums->{crash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
-    $self->_adjust_cymbals;
+    $self->_adjust_cymbals if $self->filling;
     # $drums->{hihat}{num} = $self->_random_note($notes);
     # $drums->{kick}{num}  = $self->_random_note($notes);
     # $drums->{snare}{num} = $self->_random_note($notes);
