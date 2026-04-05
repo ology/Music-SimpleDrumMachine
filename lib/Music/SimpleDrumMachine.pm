@@ -392,7 +392,7 @@ sub BUILD {
         for my $drum (keys $args->{add_drums}->%*) {
             $drums->{$drum} = {
                 num  => $args->{add_drums}->{$drum},
-                chan => $chan++,
+                chan => $self->chan < 0 ? $chan++ : $self->chan,
                 pat  => [],
             };
         }
