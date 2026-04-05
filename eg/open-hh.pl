@@ -14,14 +14,7 @@ my $dm = Music::SimpleDrumMachine->new(
     chan      => $chan,
     next_part => 'part_A',
     parts     => { part_A => \&part_A },
-    drums     => {
-        kick  => { num => 36, chan => $chan < 0 ? 0 : $chan, pat => [] },
-        snare => { num => 38, chan => $chan < 0 ? 1 : $chan, pat => [] },
-        hihat => { num => 42, chan => $chan < 0 ? 2 : $chan, pat => [] },
-        open  => { num => 46, chan => $chan < 0 ? 3 : $chan, pat => [] },
-        crash => { num => 49, chan => $chan < 0 ? 4 : $chan, pat => [] },
-    },
-    verbose => 1,
+    verbose   => 1,
 );
 
 sub part_A {

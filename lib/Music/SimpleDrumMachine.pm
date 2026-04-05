@@ -149,6 +149,7 @@ Default:
   kick  => { num => 36, chan => ..., pat => [] },
   snare => { num => 38, chan => ..., pat => [] },
   hihat => { num => 42, chan => ..., pat => [] },
+  open  => { num => 46, chan => ..., pat => [] },
   crash => { num => 49, chan => ..., pat => [] },
 
 =cut
@@ -165,7 +166,8 @@ sub _build_drums {
         kick  => { num => 36, chan => $self->chan < 0 ? 0 : $self->chan, pat => [] },
         snare => { num => 38, chan => $self->chan < 0 ? 1 : $self->chan, pat => [] },
         hihat => { num => 42, chan => $self->chan < 0 ? 2 : $self->chan, pat => [] },
-        crash => { num => 49, chan => $self->chan < 0 ? 3 : $self->chan, pat => [] },
+        open  => { num => 46, chan => $self->chan < 0 ? 3 : $self->chan, pat => [] },
+        crash => { num => 49, chan => $self->chan < 0 ? 4 : $self->chan, pat => [] },
     };
     return $drums;
 }
