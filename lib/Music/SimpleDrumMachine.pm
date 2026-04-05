@@ -478,44 +478,7 @@ sub _adjust_cymbals($self) {
 sub _adjust_drums($self, $fill_flag) {
     say 'Beats: ' . $self->_beat_count if $self->verbose;
     if ($self->filling && $fill_flag) {
-        say 'fill' if $self->verbose;
-        my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
-        say "size: $size" if $self->verbose;
-        my %durations = (
-            sn => [1],
-            en => [1,0],
-            qn => [1,0,0,0],
-        );
-        my $mdp = Music::Duration::Partition->new(
-            size    => $self->divisions,
-            pool    => [qw(qn en sn)],
-            weights => [1, 2, 1],
-            groups  => [0, 0, 2],
-        );
-        my $motif = $mdp->motif;
-        my @converted = map { $durations{$_}->@* } @$motif;
-        if ($size < $self->divisions) {
-            my $div = $self->beats / $size;
-            my ($next, $pats) = $self->prefill_part->();
-            for my $drum (keys $self->drums->%*) {
-                if ($drum eq 'snare') {
-                    $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
-                }
-                else {
-                    $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
-                }
-            }
-        }
-        else {
-            for my $drum (keys $self->drums->%*) {
-                if ($drum eq 'snare') {
-                    $self->drums->{$drum}{pat} = \@converted;
-                }
-                else {
-                    $self->drums->{$drum}{pat} = [ (0) x $self->beats ];
-                }
-            }
-        }
+        $self->_fill;
     }
     else {
         my $part = $self->parts->{ $self->next_part };
@@ -532,6 +495,47 @@ sub _adjust_drums($self, $fill_flag) {
     # $drums->{kick}{num}  = $self->_random_note($notes);
     # $drums->{snare}{num} = $self->_random_note($notes);
     # $drums->{crash}{num} = $self->_random_note($notes);
+}
+
+sub _fill($self) {
+    say 'fill' if $self->verbose;
+    my $size = rand() < 0.5 ? $self->divisions / 2 : $self->divisions;
+    say "size: $size" if $self->verbose;
+    my %durations = (
+        sn => [1],
+        en => [1,0],
+        qn => [1,0,0,0],
+    );
+    my $mdp = Music::Duration::Partition->new(
+        size    => $self->divisions,
+        pool    => [qw(qn en sn)],
+        weights => [1, 2, 1],
+        groups  => [0, 0, 2],
+    );
+    my $motif = $mdp->motif;
+    my @converted = map { $durations{$_}->@* } @$motif;
+    if ($size < $self->divisions) {
+        my $div = $self->beats / $size;
+        my ($next, $pats) = $self->prefill_part->();
+        for my $drum (keys $self->drums->%*) {
+            if ($drum eq 'snare') {
+                $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+            }
+            else {
+                $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
+            }
+        }
+    }
+    else {
+        for my $drum (keys $self->drums->%*) {
+            if ($drum eq 'snare') {
+                $self->drums->{$drum}{pat} = \@converted;
+            }
+            else {
+                $self->drums->{$drum}{pat} = [ (0) x $self->beats ];
+            }
+        }
+    }
 }
 
 sub _velocity($self, $min, $max, $offset) {
