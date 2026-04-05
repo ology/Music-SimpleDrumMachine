@@ -6,7 +6,6 @@
 #   perl eg/add-drums.pl fluid 90 # with fluidsynth
 #   perl eg/add-drums.pl usb 100 -1 # multi-timbral
 
-use v5.36;
 use Music::SimpleDrumMachine ();
 
 my $port_name = shift || 'usb';
@@ -31,7 +30,7 @@ my $dm = Music::SimpleDrumMachine->new(
 );
 
 sub part_A {
-    say 'part A';
+    print "part_A\n";
     my %patterns = (
         hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
         open  => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)],
@@ -44,7 +43,7 @@ sub part_A {
     return $next, \%patterns;
 }
 sub fill_A {
-    say 'fill_A';
+    print "fill_A\n";
     my %patterns = (
         snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 0 0)],
         tom   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1)],
