@@ -4,6 +4,7 @@ Revision history for Music-SimpleDrumMachine
 
 0.0301 2026-04-05 08:46:22
     - Fix documentation.
+    - Fix _default_part() and _default_fill() logic.
 
 0.0300 2026-04-05 08:42:38
     - Make fills user defined.
