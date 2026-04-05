@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Improve documentation.
+    - Clean-up code a bit.
 
 0.0402 2026-04-05 15:30:32
     - Don't change the notes.

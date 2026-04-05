@@ -557,8 +557,7 @@ sub BUILD {
                 }
                 for my $drum (keys $self->drums->%*) { # fill the queue
                     if ($self->drums->{$drum}{pat}[ $self->_beat_count % scalar($self->drums->{$drum}{pat}->@*) ]) {
-                        my $velo = $self->velocity($self->velo_min, $self->velo_max, $self->velo_off);
-                        push $self->_queue->@*, { drum => $drum, velocity => $velo };
+                        push $self->_queue->@*, { drum => $drum, velocity => $self->velocity };
                     }
                 }
                 for my $drum ($self->_queue->@*) { # play the queue
@@ -692,18 +691,19 @@ sub _default_fill($self) {
 
 =head2 velocity
 
-  $dm->velocity($min, $max, $offset);
+  $dm->velocity;
 
-Return a random velocity between the minimum and maximum, starting at
-offset.
+Return a random velocity between the B<velo_min> (minimum) and
+B<velo_max> (maximum), starting at the B<velo_off> offset.
 
-So, for C<-10, 10, 110>, a number between C<100> and C<120> will be
-returned. The triple C<0, 0, 127> will return C<127> every time.
+So, for C<-10, 10, 110> (the default), a number between C<100> and
+C<120> will be returned. The triple C<0, 0, 127> will return C<127>
+every time.
 
 =cut
 
-sub velocity($self, $min, $max, $offset) {
-    my $random = $offset + int(rand($max - $min + 1)) + $min;
+sub velocity($self) {
+    my $random = $self->velo_off + int(rand($self->velo_max - $self->velo_min + 1)) + $self->velo_min;
     return $random;
 }
 
