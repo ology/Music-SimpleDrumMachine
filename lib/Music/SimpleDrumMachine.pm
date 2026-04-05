@@ -78,7 +78,9 @@ no warnings 'experimental::try';
 
 C<Music::SimpleDrumMachine> is a simple 16th-note-phrase drummer. By
 invoking this module, your MIDI device will begin playing in
-real-time. And triplets are not supported.
+real-time.
+
+* Triplets are not supported. Boo!
 
 =head1 ATTRIBUTES
 
