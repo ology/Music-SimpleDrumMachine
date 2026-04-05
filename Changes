@@ -2,6 +2,7 @@ Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
     - Make the fills optional with the filling attribute.
+    - Make _adjust_drums() more generic.
 
 0.0203 2026-04-04 23:58:42
     - Fix the 'add_drums' logic.

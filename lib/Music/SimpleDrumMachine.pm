@@ -497,14 +497,24 @@ sub _adjust_drums($self, $fill_flag) {
         if ($size < $self->divisions) {
             my $div = $self->beats / $size;
             my ($next, $pats) = $self->prefill_part->();
-            $self->drums->{hihat}{pat} = [ $pats->{hihat}->@[0 .. $div - 1], (0) x $div ];
-            $self->drums->{kick}{pat}  = [ $pats->{kick}->@[0 .. $div - 1],  (0) x $div ];
-            $self->drums->{snare}{pat} = [ $pats->{snare}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+            for my $drum (keys $self->drums->%*) {
+                if ($drum eq 'snare') {
+                    $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], @converted[0 .. $div - 1] ]
+                }
+                else {
+                    $self->drums->{$drum}{pat} = [ $pats->{$drum}->@[0 .. $div - 1], (0) x $div ];
+                }
+            }
         }
         else {
-            $self->drums->{hihat}{pat} = [ (0) x $self->beats ];
-            $self->drums->{kick}{pat}  = [ (0) x $self->beats ];
-            $self->drums->{snare}{pat} = \@converted;
+            for my $drum (keys $self->drums->%*) {
+                if ($drum eq 'snare') {
+                    $self->drums->{$drum}{pat} = \@converted;
+                }
+                else {
+                    $self->drums->{$drum}{pat} = [ (0) x $self->beats ];
+                }
+            }
         }
     }
     else {
