@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Add drums, a part, and a fill
+# Add drums, a part, and a fill.
 # Examples:
 #   perl eg/add-drums.pl 'gs wavetable' 90 # on windows
 #   perl eg/add-drums.pl fluid 90 # with fluidsynth
