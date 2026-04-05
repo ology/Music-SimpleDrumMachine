@@ -438,7 +438,7 @@ has _loop => (
 
 =head2 new
 
-  $dm = Music::SimpleDrumMachine->new(verbose => 1);
+  $dm = Music::SimpleDrumMachine->new(%arguments);
 
 Create a new C<Music::SimpleDrumMachine> object.
 

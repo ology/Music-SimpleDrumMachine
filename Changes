@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Improve documentation.
 
 0.0305 2026-04-05 10:44:01
     - Automatically account for uncustomized drums.
