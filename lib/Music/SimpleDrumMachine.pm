@@ -465,7 +465,7 @@ sub BUILD {
     my $n = keys $self->drums->%*;
     for my $drum ($args->{add_drums}->@*) {
         my $chan = defined $drum->{chan} ? $drum->{chan} : $self->chan < 0 ? $n++ : $self->chan;
-        $self->drums->{ $drum->{drum} } = { num  => $drum->{num}, chan => $chan, pat  => [] };
+        $self->drums->{ $drum->{drum} } = { num => $drum->{num}, chan => $chan, pat  => [] };
     }
 
     my $timer = IO::Async::Timer::Periodic->new(
