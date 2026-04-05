@@ -37,7 +37,7 @@ no warnings 'experimental::try';
     },
     fills     => { fill_A => \&fill_A },
     next_fill => 'fill_A',
-    verbose => 1,
+    verbose   => 1,
   );
 
   sub part_A {
