@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
-# Play and clock an external MIDI device, like a drum machine or sequencer.
+# Play and clock a MIDI device, like a drum machine or sequencer.
 # Examples:
 #   perl eg/grooves.pl 'gs wavetable' 90 # on windows
 #   perl eg/grooves.pl fluid 90 # with fluidsynth
-#   perl eg/grooves.pl usb 100 -1 # multi-timbral
+#   perl eg/grooves.pl usb 100 -1 # multi-timbral device
 
 use v5.36;
 use Data::Dumper::Compact 'ddc';
