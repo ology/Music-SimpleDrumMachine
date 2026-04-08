@@ -1,7 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
-    - Add a missing drum to eg/grooves.pl.
+    - Add a missing drum to eg/grooves.pl. Oof!
 
 0.0404 2026-04-08 10:40:39
     - Rename the closed "hihat" to "closed."
