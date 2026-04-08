@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0406';
+our $VERSION = '0.0407';
 
 use v5.36;
 use feature 'try';
@@ -180,10 +180,27 @@ The known drums.
 
 Default:
 
-  kick      => { num => 36, chan => ..., pat => [] },
-  snare     => { num => 38, chan => ..., pat => [] },
-  closed    => { num => 42, chan => ..., pat => [] },
-  fillcrash => { num => 49, chan => ..., pat => [] },
+  kick      => 36 # Bass Drum 1
+  snare     => 38 # Acoustic Snare
+  closed    => 42 # Closed Hi Hat
+  fillcrash => 49 # Crash Cymbal 1
+
+These drums names are used by the MIDI::Drummer::Tiny::Grooves
+module and must be added with the B<add_drums> constructor
+attribute:
+
+  rimshot => 37 # Side Stick
+  clap    => 39 # Hand Clap
+  open    => 46 # Open Hi Hat
+  shaker  => 70 # Maracas
+  cowbell => 56 # Cowbell
+  cymbal  => 57 # Crash Cymbal 2
+  hi_tom  => 48 # Hi Mid Tom
+  mid_tom => 47 # Low Mid Tom
+  low_tom => 45 # Low Tom
+
+But literally B<any> name could be used, as long as the number is a
+known MIDI percussion instrument number.
 
 =cut
 

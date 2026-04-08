@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Improve documentation.
+    - Improve eg/grooves.pl.
 
 0.0406 2026-04-08 11:47:16
     - Fix documentation.
