@@ -24,6 +24,7 @@ my $dm = Music::SimpleDrumMachine->new(
     chan      => $chan,
     add_drums => [
         { drum => 'open', num => 46 },
+        { drum => 'cymbal', num => 57 },
     ],
     next_part => 'part',
     parts     => { part => \&part },
