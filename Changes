@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0405 2026-04-08 11:10:29
     - Add a missing drum to eg/grooves.pl. Oof!
 
 0.0404 2026-04-08 10:40:39
