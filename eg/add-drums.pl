@@ -4,7 +4,7 @@
 # Examples:
 #   perl eg/add-drums.pl 'gs wavetable' 90 # on windows
 #   perl eg/add-drums.pl fluid 90 # with fluidsynth
-#   perl eg/add-drums.pl usb 100 -1 # multi-timbral
+#   perl eg/add-drums.pl usb 100 -1 # multi-timbral device
 
 use Music::SimpleDrumMachine ();
 

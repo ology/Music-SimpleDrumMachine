@@ -4,7 +4,7 @@
 # Examples:
 #   perl eg/euclidean.pl 'gs wavetable' 90 # on windows
 #   perl eg/euclidean.pl fluid 90 # with fluidsynth
-#   perl eg/euclidean.pl usb 100 -1 # multi-timbral
+#   perl eg/euclidean.pl usb 100 -1 # multi-timbral device
 
 use v5.36;
 use Math::Prime::XS qw(primes);
