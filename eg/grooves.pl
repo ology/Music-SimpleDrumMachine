@@ -11,15 +11,16 @@ use Data::Dumper::Compact 'ddc';
 use MIDI::Drummer::Tiny::Grooves ();
 use Music::SimpleDrumMachine ();
 
-my $port_name = shift || 'usb';
-my $bpm       = shift || 120;
-my $chan      = shift // 9;
+my $port  = shift || 'usb';
+my $bpm   = shift || 120;
+my $chan  = shift // 9;
+my $style = shift || 'rock';
 
 my $grooves = MIDI::Drummer::Tiny::Grooves->new(return_patterns => 1);
-my $set = $grooves->search({ cat => 'rock' });
+my $set = $grooves->search({ cat => $style });
 
 my $dm = Music::SimpleDrumMachine->new(
-    port_name => $port_name,
+    port_name => $port,
     bpm       => $bpm,
     chan      => $chan,
     add_drums => [
