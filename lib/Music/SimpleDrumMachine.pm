@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0403';
+our $VERSION = '0.0404';
 
 use v5.36;
 use feature 'try';
@@ -44,9 +44,9 @@ no warnings 'experimental::try';
   sub part_A {
       print "part A\n";
       my %patterns = (
-          hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
-          kick  => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
-          snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
+          closed => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+          kick   => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
+          snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
       );
       my $next = 'part_B';
       return $next, \%patterns;
@@ -54,9 +54,9 @@ no warnings 'experimental::try';
   sub part_B {
       print "part B\n";
       my %patterns = (
-          hihat => [qw(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)],
-          kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
-          snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
+          closed => [qw(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)],
+          kick   => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
+          snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
       );
       my $next = 'part_A';
       return $next, \%patterns;
@@ -180,9 +180,9 @@ The known drums.
 
 Default:
 
-  kick  => { num => 36, chan => ..., pat => [] },
-  snare => { num => 38, chan => ..., pat => [] },
-  hihat => { num => 42, chan => ..., pat => [] },
+  kick      => { num => 36, chan => ..., pat => [] },
+  snare     => { num => 38, chan => ..., pat => [] },
+  closed    => { num => 42, chan => ..., pat => [] },
   fillcrash => { num => 49, chan => ..., pat => [] },
 
 =cut
@@ -196,9 +196,9 @@ has drums => (
 sub _build_drums {
     my ($self) = @_;
     my $drums = {
-        kick  => { num => 36, chan => $self->chan < 0 ? 0 : $self->chan, pat => [] },
-        snare => { num => 38, chan => $self->chan < 0 ? 1 : $self->chan, pat => [] },
-        hihat => { num => 42, chan => $self->chan < 0 ? 2 : $self->chan, pat => [] },
+        kick      => { num => 36, chan => $self->chan < 0 ? 0 : $self->chan, pat => [] },
+        snare     => { num => 38, chan => $self->chan < 0 ? 1 : $self->chan, pat => [] },
+        closed    => { num => 42, chan => $self->chan < 0 ? 2 : $self->chan, pat => [] },
         fillcrash => { num => 49, chan => $self->chan < 0 ? 3 : $self->chan, pat => [] },
     };
     return $drums;
@@ -593,11 +593,11 @@ sub _adjust_cymbals($self) {
     if ($self->fill_crash) {
         if ($self->_filled) {
             $self->drums->{fillcrash}{pat}[0] = 1; # crash on one
-            $self->drums->{hihat}{pat}[0] = 0; # mutually exclusive
+            $self->drums->{closed}{pat}[0] = 0; # mutually exclusive
         }
         else {
             $self->drums->{fillcrash}{pat}[0] = 0; # not crashing
-            $self->drums->{hihat}{pat}[0] = $self->_hats; # restore hihat bit
+            $self->drums->{closed}{pat}[0] = $self->_hats; # restore hihat bit
         }
     }
     $self->_filled(0);
@@ -628,7 +628,7 @@ sub _adjust_drums($self, $fill_flag) {
         }
     }
     if ($self->filling) {
-        $self->_hats($self->drums->{hihat}{pat}[0]); # save bit
+        $self->_hats($self->drums->{closed}{pat}[0]); # save bit
         $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
         $self->_adjust_cymbals;
     }
@@ -637,9 +637,9 @@ sub _adjust_drums($self, $fill_flag) {
 sub _default_part($self) {
     say '_default_part' if $self->verbose;
     my %patterns = (
-        hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
-        kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
-        snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
+        closed => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+        kick   => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
+        snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
     my $next = '_default_part';
     return $next, \%patterns;

@@ -35,12 +35,12 @@ my $dm = Music::SimpleDrumMachine->new(
 sub part_A {
     print "part_A\n";
     my %patterns = (
-        hihat => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
-        open  => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)],
-        kick  => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
-        snare => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
-        tom   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0)],
-        china => [qw(0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0)],
+        closed => [qw(1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0)],
+        open   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)],
+        kick   => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
+        snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
+        tom    => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0)],
+        china  => [qw(0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0)],
     );
     my $next = 'part_A';
     return $next, \%patterns;
