@@ -226,9 +226,9 @@ has fill_crash => (
   $fills = $dm->fills;
   $dm->fills($fills);
 
-List of code-refs of the fills to play.
+List of named code-refs of the fills to play.
 
-Default: C<[_default_fill()]>
+Default: C<{ _default_fill =E<gt> _default_fill() }>
 
 =cut
 
@@ -312,9 +312,9 @@ has notes => (
   $parts = $dm->parts;
   $dm->parts($parts);
 
-List of code-refs of the parts to play.
+List of named code-refs of the parts to play.
 
-Default: C<[_default_part()]>
+Default: C<{ _default_part =E<gt> _default_part() }>
 
 =cut
 
