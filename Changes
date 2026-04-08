@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0404 2026-04-08 10:40:39
     - Rename the closed "hihat" to "closed."
     - Add the eg/grooves.pl example program.
 
