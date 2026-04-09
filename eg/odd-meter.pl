@@ -31,9 +31,9 @@ my $dm = Music::SimpleDrumMachine->new(
 sub part_A {
     say 'Part A';
     my %patterns = (
-        closed => [qw(1 0 1 0 1 0 1 0 1 0 1 0)],
-        kick   => [qw(1 0 0 0 0 0 0 0 1 0 0 0)],
-        snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0)],
+        closed => [qw(1 0 1 0 1 0)],
+        kick   => [qw(1 0 0 0 0 0)],
+        snare  => [qw(0 0 1 0 1 0)],
     );
     my $next = 'part_B';
     return $next, \%patterns;
