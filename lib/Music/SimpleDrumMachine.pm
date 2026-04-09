@@ -62,7 +62,7 @@ no warnings 'experimental::try';
       return $next, \%patterns;
   }
   sub fill_A {
-      print "fill_A\n";
+      print "Fill A\n";
       my %patterns = (
           snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 0)],
       );
