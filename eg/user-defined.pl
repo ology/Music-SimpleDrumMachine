@@ -17,7 +17,12 @@ my $dm = Music::SimpleDrumMachine->new(
     port_name => $port,
     bpm       => $bpm,
     chan      => $chan,
-    parts     => { part_A => \&part_A, part_B => \&part_B, fill_A => \&fill_A, fill_B => \&fill_B },
+    parts     => {
+        part_A => \&part_A,
+        part_B => \&part_B,
+        fill_A => \&fill_A,
+        fill_B => \&fill_B,
+    },
     next_part => [qw( part_A part_B fill_A part_A part_B fill_B )],
     filling   => 0,
     verbose   => 1,
