@@ -249,7 +249,7 @@ has fill_crash => (
 
 List of named code-refs of the fills to play.
 
-Default: C<{ _default_fill =E<gt> _default_fill() }>
+Default: C<{ _default_fill =E<gt> \&_default_fill }>
 
 =cut
 
@@ -343,7 +343,7 @@ If a part has C<'fill'> in the name, it will be played for a single
 bar, on the 3rd bar of a 4-bar phrase iff the B<filling> attribute is
 set to zero.
 
-Default: C<{ _default_part =E<gt> _default_part() }>
+Default: C<{ _default_part =E<gt> \&_default_part }>
 
 =cut
 
@@ -360,7 +360,9 @@ sub _build_parts {
 
   $port = $dm->port_name;
 
-The name of the MIDI output port.
+The name of the MIDI output port. This can be the full name or a
+unique part of the name, like C<'usb'> for C<'USB MIDI Interface'>,
+for instance. Case is ignored.
 
 Default: C<usb>
 
