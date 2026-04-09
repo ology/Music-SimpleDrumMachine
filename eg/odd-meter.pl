@@ -41,8 +41,8 @@ sub part_A {
 sub part_B {
     say 'Part B';
     my %patterns = (
-        closed => [qw(1 0 1 0 1 0 1 0 1 0 1 0)],
-        open   => [qw(0 0 0 0 0 0 0 0 0 0 0 1)],
+        closed => [qw(1 1 0 1 1 1 1 1 1 1 1 0)],
+        open   => [qw(0 0 1 0 0 0 0 0 0 0 0 1)],
         kick   => [qw(1 0 0 0 0 0 0 0 1 0 1 0)],
         snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0)],
     );
