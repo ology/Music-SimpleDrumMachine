@@ -184,20 +184,15 @@ Default:
   snare     => 38 # Acoustic Snare
   closed    => 42 # Closed Hi Hat
   fillcrash => 49 # Crash Cymbal 1
-
-These drums names are used by the MIDI::Drummer::Tiny::Grooves
-module and must be added with the B<add_drums> constructor
-attribute:
-
-  rimshot => 37 # Side Stick
-  clap    => 39 # Hand Clap
-  open    => 46 # Open Hi Hat
-  shaker  => 70 # Maracas
-  cowbell => 56 # Cowbell
-  cymbal  => 57 # Crash Cymbal 2
-  hi_tom  => 48 # Hi Mid Tom
-  mid_tom => 47 # Low Mid Tom
-  low_tom => 45 # Low Tom
+  open      => 46 # Open Hi Hat
+  rimshot   => 37 # Side Stick
+  clap      => 39 # Hand Clap
+  shaker    => 70 # Maracas
+  cowbell   => 56 # Cowbell
+  cymbal    => 57 # Crash Cymbal 2
+  hi_tom    => 48 # Hi Mid Tom
+  mid_tom   => 47 # Low Mid Tom
+  low_tom   => 45 # Low Tom
 
 But literally B<any> name could be used, as long as the number is a
 known MIDI percussion instrument number.
@@ -213,10 +208,19 @@ has drums => (
 sub _build_drums {
     my ($self) = @_;
     my $drums = {
-        kick      => { num => 36, chan => $self->chan < 0 ? 0 : $self->chan, pat => [] },
-        snare     => { num => 38, chan => $self->chan < 0 ? 1 : $self->chan, pat => [] },
-        closed    => { num => 42, chan => $self->chan < 0 ? 2 : $self->chan, pat => [] },
-        fillcrash => { num => 49, chan => $self->chan < 0 ? 3 : $self->chan, pat => [] },
+        kick      => { num => 36, chan => $self->chan < 0 ?  0 : $self->chan, pat => [] },
+        snare     => { num => 38, chan => $self->chan < 0 ?  1 : $self->chan, pat => [] },
+        closed    => { num => 42, chan => $self->chan < 0 ?  2 : $self->chan, pat => [] },
+        fillcrash => { num => 49, chan => $self->chan < 0 ?  3 : $self->chan, pat => [] },
+        open      => { num => 46, chan => $self->chan < 0 ?  4 : $self->chan, pat => [] },
+        rimshot   => { num => 37, chan => $self->chan < 0 ?  5 : $self->chan, pat => [] },
+        clap      => { num => 39, chan => $self->chan < 0 ?  6 : $self->chan, pat => [] },
+        shaker    => { num => 70, chan => $self->chan < 0 ?  7 : $self->chan, pat => [] },
+        cowbell   => { num => 56, chan => $self->chan < 0 ?  8 : $self->chan, pat => [] },
+        cymbal    => { num => 57, chan => $self->chan < 0 ? 10 : $self->chan, pat => [] }, # skip 9
+        hi_tom    => { num => 48, chan => $self->chan < 0 ? 11 : $self->chan, pat => [] },
+        mid_tom   => { num => 47, chan => $self->chan < 0 ? 12 : $self->chan, pat => [] },
+        low_tom   => { num => 45, chan => $self->chan < 0 ? 13 : $self->chan, pat => [] },
     };
     return $drums;
 }
