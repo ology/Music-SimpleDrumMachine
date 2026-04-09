@@ -335,6 +335,9 @@ has notes => (
 
 List of named code-refs of the parts to play.
 
+If a part has C<'fill'> in the name, it will be played for a single
+bar, on the 3rd bar of a 4-bar phrase.
+
 Default: C<{ _default_part =E<gt> _default_part() }>
 
 =cut
