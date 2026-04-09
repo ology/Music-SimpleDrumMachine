@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Fixed-up the eg/ programs.
 
 0.0501 2026-04-08 21:35:43
     - Add all the drums known to MIDI::Drummer::Tiny::Grooves.
