@@ -59,7 +59,7 @@ sub fill_A {
     return $next, \%patterns;
 }
 sub fill_B {
-    say "fill B";
+    say 'Fill B';
     my %patterns = (
         snare => [qw(1 0 1 0 1 1 1 1 0 1 0 1 1 0 0 0)],
         tom   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1)],
