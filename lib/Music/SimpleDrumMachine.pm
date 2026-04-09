@@ -400,22 +400,6 @@ has prefill_part => (
     default => sub { \&_default_part },
 );
 
-=head2 verbose
-
-  $verbose = $dm->verbose;
-
-Show progress.
-
-Default: C<0>
-
-=cut
-
-has verbose => (
-    is      => 'ro',
-    isa     => sub { croak "$_[0] is not a boolean" unless $_[0] =~ /^[01]$/ },
-    default => sub { 0 },
-);
-
 =head2 velo_max
 
   $velo_max = $dm->velo_max;
@@ -465,6 +449,22 @@ has velo_off => (
     is      => 'rw',
     isa     => sub { croak "$_[0] is not valid" unless $_[0] =~ /^\d+$/ },
     default => sub { 110 },
+);
+
+=head2 verbose
+
+  $verbose = $dm->verbose;
+
+Show progress.
+
+Default: C<0>
+
+=cut
+
+has verbose => (
+    is      => 'ro',
+    isa     => sub { croak "$_[0] is not a boolean" unless $_[0] =~ /^[01]$/ },
+    default => sub { 0 },
 );
 
 has _queue => (
