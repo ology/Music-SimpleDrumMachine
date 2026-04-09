@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0500 2026-04-08 21:05:07
     - Make arbitrary assignment of parts and fills possible.
     - Improve documentation.
 
