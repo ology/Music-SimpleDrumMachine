@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0407';
+our $VERSION = '0.0500';
 
 use v5.36;
 use feature 'try';
@@ -296,7 +296,11 @@ has next_fill => (
   $next_part = $dm->next_part;
   $dm->next_part($next_part);
 
-Name of the part to play first and set subsequently in a part.
+Name of the part or list of parts to play first and also set
+subsequently in a part.
+
+If this is an array-reference, the named parts or fills are played in
+succession.
 
 Default: C<'_default_part'>
 
@@ -505,6 +509,7 @@ my %attrs = (
         _beat_count => 0, # how many beats?
         _bar_count  => 0, # how many measures?
         _hats       => 0, # 1st hihat beat bit
+        _part_inc   => 0, # number of next_part
         _trigger    => 0, # trigger a fill
         _filled     => 0, # we just filled
     },
@@ -564,7 +569,10 @@ sub BUILD {
             $self->_ticks($self->_ticks + 1);
 
             if ($self->_ticks % $self->_nth == 0) {
-                if (($self->_beat_count + $self->beats - $self->_trigger) % ($self->beats * $self->divisions - 1) == 0) {
+                if (
+                    ($self->filling || (ref($self->next_part) && $self->next_part->[ $self->_part_inc % $self->next_part->@* ] =~ /fill/))
+                    && ($self->_beat_count + $self->beats - $self->_trigger) % ($self->beats * $self->divisions - 1) == 0
+                ) {
                     $self->_adjust_drums(1); # fill!
                     $self->_filled($self->_filled + 1);
                 }
@@ -622,17 +630,31 @@ sub _adjust_cymbals($self) {
 
 sub _adjust_drums($self, $fill_flag) {
     say 'Beats: ' . $self->_beat_count if $self->verbose;
-    my ($next, $patterns);
+    my ($next, $patterns, $part, $name);
+    if (ref $self->next_part eq 'ARRAY') {
+        $name = $self->next_part->[ $self->_part_inc % $self->next_part->@* ];
+        $part = $self->parts->{$name};
+    }
     # play a fill or a part
-    if ($self->filling && $fill_flag) {
-        my $fill = $self->fills->{ $self->next_fill };
-        ($next, $patterns) = $fill->();
-        $self->next_fill($next);
+    if (($self->filling || $name =~ 'fill') && $fill_flag) {
+        $part ||= $self->fills->{ $self->next_fill };
+        ($next, $patterns) = $part->();
+        if ($next) {
+            $self->next_fill($next);
+        }
+        else {
+            $self->_part_inc($self->_part_inc + 1);
+        }
     }
     else {
-        my $part = $self->parts->{ $self->next_part };
+        $part ||= $self->parts->{ $self->next_part };
         ($next, $patterns) = $part->();
-        $self->next_part($next);
+        if ($next) {
+            $self->next_part($next);
+        }
+        else {
+            $self->_part_inc($self->_part_inc + 1);
+        }
     }
     # add the patterns to the drums
     for my $drum (keys %$patterns) {

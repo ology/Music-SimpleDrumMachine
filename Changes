@@ -4,6 +4,7 @@ Revision history for Music-SimpleDrumMachine
 
 0.0407 2026-04-08 14:54:09
     - Improve documentation.
+    - Make arbitrary assignment of parts and fills possible.
     - Improve eg/grooves.pl.
 
 0.0406 2026-04-08 11:47:16
