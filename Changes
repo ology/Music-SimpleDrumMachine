@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Add the missing conga patch that is known to M::D::T::Grooves.
 
 0.0503 2026-04-15 22:58:22
     - Don't require ddc. Oops.
