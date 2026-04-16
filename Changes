@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0503 2026-04-15 22:58:22
     - Don't require ddc. Oops.
     - Fix eg/grooves.pl with the improved syntax.
 
