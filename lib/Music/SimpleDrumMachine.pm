@@ -10,7 +10,7 @@ use feature 'try';
 use Moo;
 use strictures 2;
 use Carp qw(croak);
-use Data::Dumper::Compact qw(ddc);
+# use Data::Dumper::Compact qw(ddc);
 use IO::Async::Loop ();
 use IO::Async::Timer::Periodic ();
 use MIDI::RtMidi::FFI::Device ();

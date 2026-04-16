@@ -32,7 +32,7 @@ my $dm = Music::SimpleDrumMachine->new(
 sub part {
     say 'part';
     my $groove = $grooves->get_groove(0, $set);
-    my %patterns = $groove->{groove}->();
+    my %patterns = $grooves->groove($groove->{groove}->%*);
     say $groove->{name}, ' ', ddc \%patterns;
     my $next = 'part';
     return $next, \%patterns;
