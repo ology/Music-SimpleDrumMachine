@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Updated eg/grooves.pl a bit.
 
 0.0504 2026-04-16 09:03:27
     - Add the missing conga patch that is known to M::D::T::Grooves.
