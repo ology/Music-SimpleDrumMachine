@@ -25,7 +25,7 @@ my $set;
 $set = $grooves->search({ cat => $cat }) if $cat;
 $set = $grooves->search({ name => $name }, $set) if $name;
 die "No matching grooves for $cat + $name\n" unless keys %$set;
-say 'Grooves found = ', scalar keys %$set;
+say scalar(keys %$set), " grooves found.\n";
 
 my $dm = Music::SimpleDrumMachine->new(
     port_name => $port,
