@@ -35,7 +35,7 @@ sub part {
     # not crazy about only crashing, like with some funk grooves
     $groove->{groove}{closed} = delete $groove->{groove}{cymbal}
         if !exists($groove->{groove}{closed}) && exists($groove->{groove}{cymbal});
-    my %patterns = $grooves->groove($groove->{groove}->%*);
+    my %patterns = $grooves->groove($groove->{groove});
     say $groove->{name}, ' ', ddc \%patterns;
     my $next = 'part';
     return $next, \%patterns;
