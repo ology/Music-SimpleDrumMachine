@@ -5,7 +5,7 @@
 #   perl eg/grooves.pl wavetable 90 # on windows
 #   perl eg/grooves.pl fluid 90 # with fluidsynth
 #   perl eg/grooves.pl fluid 100 9 house # change style
-#   perl eg/grooves.pl fluid 100 9 '' hop # no categeory; only named
+#   perl eg/grooves.pl fluid 100 9 '*' hop # no categeory; only named
 #   perl eg/grooves.pl usb 100 -1 # multi-timbral device
 
 use v5.36;
@@ -21,6 +21,8 @@ my $name = shift // '';
 
 my $grooves = MIDI::Drummer::Tiny::Grooves->new(return_patterns => 1);
 
+$cat  = undef if $cat eq '*';
+$name = undef if $name eq '*';
 my $set;
 $set = $grooves->search({ cat => $cat }) if $cat;
 $set = $grooves->search({ name => $name }, $set) if $name;
