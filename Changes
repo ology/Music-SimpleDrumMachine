@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0505 2026-04-16 19:08:23
     - Updated eg/grooves.pl to use the changed groove() argument correctly.
 
 0.0504 2026-04-16 09:03:27
