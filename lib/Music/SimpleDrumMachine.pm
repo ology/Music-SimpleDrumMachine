@@ -581,8 +581,7 @@ sub BUILD {
             $self->_ticks($self->_ticks + 1);
 
             if ($self->_ticks % $self->_nth == 0) {
-                if (
-                    ($self->filling || (ref($self->next_part) && $self->next_part->[ $self->_part_inc % $self->next_part->@* ] =~ /fill/))
+                if (($self->filling || (ref($self->next_part) && $self->next_part->[ $self->_part_inc % $self->next_part->@* ] =~ /fill/))
                     && ($self->_beat_count + $self->beats - $self->_trigger) % ($self->beats * $self->divisions - 1) == 0
                 ) {
                     $self->_adjust_drums(1); # fill!
