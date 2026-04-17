@@ -40,7 +40,7 @@ my $dm = Music::SimpleDrumMachine->new(
 
 sub part {
     say 'part';
-    my $groove = $grooves->get_groove(0, $set);
+    my $groove = $grooves->get_groove(0, $set); # get a random groove
     # not crazy about only crashing, like with some funk grooves
     $groove->{groove}{closed} = delete $groove->{groove}{cymbal}
         if !exists($groove->{groove}{closed}) && exists($groove->{groove}{cymbal});
