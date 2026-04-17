@@ -636,7 +636,6 @@ sub _adjust_cymbals($self) {
             $self->drums->{closed}{pat}[0] = $self->_hats; # restore hihat bit
         }
     }
-    $self->_filled(0);
 }
 
 sub _adjust_drums($self, $fill_flag) {
@@ -681,6 +680,7 @@ sub _adjust_drums($self, $fill_flag) {
         $self->_hats($self->drums->{closed}{pat}[0]); # save bit
         $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
         $self->_adjust_cymbals;
+        $self->_filled(0);
     }
 }
 
