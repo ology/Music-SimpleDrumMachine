@@ -2,7 +2,7 @@
 
 # Play and clock a MIDI device, like a drum machine or sequencer.
 # Examples:
-#   perl eg/grooves.pl 'gs wavetable' 90 # on windows
+#   perl eg/grooves.pl wavetable 90 # on windows
 #   perl eg/grooves.pl fluid 90 # with fluidsynth
 #   perl eg/grooves.pl fluid 100 9 house # change style
 #   perl eg/grooves.pl usb 100 -1 # multi-timbral device
