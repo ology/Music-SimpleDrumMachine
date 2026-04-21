@@ -30,7 +30,7 @@ sub part_A {
         open   => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0)],
         snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );
-    my $next = '';
+    my $next = 'part_B';
     return $next, \%patterns;
 }
 sub part_B {
@@ -42,6 +42,6 @@ sub part_B {
         snare   => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
         mid_tom => [qw(0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0)],
     );
-    my $next = '';
+    my $next = 'part_A';
     return $next, \%patterns;
 }
