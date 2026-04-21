@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Use no auto-fills and only play parts.
+# Use no fills and only play parts.
 
 use v5.36;
 use Music::SimpleDrumMachine ();
