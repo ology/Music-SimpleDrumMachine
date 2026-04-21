@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0507 2026-04-20 19:58:33
     - Improve eg/grooves.pl again.
     - Clean code a bit.
     - Add the rest of the General MIDI percussion set.
