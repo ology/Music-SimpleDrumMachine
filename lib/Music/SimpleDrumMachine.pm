@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0507';
+our $VERSION = '0.0508';
 
 use v5.36;
 use feature 'try';
@@ -189,7 +189,7 @@ Default:
   clap         => 39 # Hand Clap
   shaker       => 70 # Maracas
   cowbell      => 56 # Cowbell
-  cymbal       => 57 # Crash Cymbal 2
+  crash        => 57 # Crash Cymbal 2
   hi_tom       => 48 # Hi Mid Tom
   mid_tom      => 47 # Low Mid Tom
   low_tom      => 45 # Low Tom
@@ -251,7 +251,7 @@ sub _build_drums {
         clap         => { num => 39, chan => $self->chan < 0 ?  6 : $self->chan, pat => [] },
         shaker       => { num => 70, chan => $self->chan < 0 ?  7 : $self->chan, pat => [] },
         cowbell      => { num => 56, chan => $self->chan < 0 ?  8 : $self->chan, pat => [] },
-        cymbal       => { num => 57, chan => $self->chan < 0 ? 10 : $self->chan, pat => [] }, # skip 9
+        crash        => { num => 57, chan => $self->chan < 0 ? 10 : $self->chan, pat => [] }, # skip 9
         hi_tom       => { num => 48, chan => $self->chan < 0 ? 11 : $self->chan, pat => [] },
         mid_tom      => { num => 47, chan => $self->chan < 0 ? 12 : $self->chan, pat => [] },
         low_tom      => { num => 45, chan => $self->chan < 0 ? 13 : $self->chan, pat => [] },
