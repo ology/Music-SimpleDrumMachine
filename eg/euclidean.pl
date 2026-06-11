@@ -11,9 +11,9 @@ use Math::Prime::XS qw(primes);
 use Music::CreatingRhythms ();
 use Music::SimpleDrumMachine ();
 
-my $beats = 16;
+my $beats  = 16;
 my %primes = ( # for computing patterns
-    all  => [ primes(16) ],
+    all  => [ primes($beats) ],
     to_5 => [ primes(5) ],
     to_7 => [ primes(7) ],
 );
