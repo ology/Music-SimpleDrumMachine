@@ -383,23 +383,6 @@ has next_part => (
     default => sub { '_default_part' },
 );
 
-=head2 notes
-
-  $notes = $dm->notes;
-  $dm->notes($notes);
-
-The notes to set for each drum - why not?
-
-Default: C<[60, 64, 67]>
-
-=cut
-
-has notes => (
-    is      => 'rw',
-    isa     => sub { croak "$_[0] is not an array-ref" unless ref($_[0]) eq 'ARRAY' },
-    default => sub { [qw(60 64 67)] },
-);
-
 =head2 parts
 
   $parts = $dm->parts;
