@@ -11,6 +11,7 @@ use Math::Prime::XS qw(primes);
 use Music::CreatingRhythms ();
 use Music::SimpleDrumMachine ();
 
+my $beats = 16;
 my %primes = ( # for computing patterns
     all  => [ primes(16) ],
     to_5 => [ primes(5) ],
@@ -37,8 +38,8 @@ sub part_A {
     # choose random primes to use by the hihat, kick, and snare
     my ($p, $q, $r) = primes_list(\%primes);
     my %patterns = (
-        closed => $mcr->euclid($p, 16),
-        kick   => $mcr->euclid($q, 16),
+        closed => $mcr->euclid($p, $beats),
+        kick   => $mcr->euclid($q, $beats),
         snare  => $mcr->rotate_n($r, $mcr->euclid(2, 16)),
     );
     my $next = 'part_B';
@@ -50,7 +51,7 @@ sub part_B {
     # choose a random prime to use by the hihat
     my ($p) = primes_list(\%primes);
     my %patterns = (
-        closed => $mcr->euclid($p, 16),
+        closed => $mcr->euclid($p, $beats),
         kick   => [qw(1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)],
         snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 1 0)],
     );
@@ -63,8 +64,8 @@ sub part_C {
     # choose a random prime to use by the hihat
     my ($p, $q) = primes_list(\%primes);
     my %patterns = (
-        closed => $mcr->euclid($p, 16),
-        open   => $mcr->euclid($q, 16),
+        closed => $mcr->euclid($p, $beats),
+        open   => $mcr->euclid($q, $beats),
         kick   => [qw(1 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0)],
         snare  => [qw(0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0)],
     );

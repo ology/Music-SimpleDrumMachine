@@ -247,7 +247,7 @@ sub _build_drums {
         closed       => { num => 42, chan => $self->chan < 0 ?  2 : $self->chan, pat => [] },
         fillcrash    => { num => 49, chan => $self->chan < 0 ?  3 : $self->chan, pat => [] }, # used for fills
         open         => { num => 46, chan => $self->chan < 0 ?  4 : $self->chan, pat => [] },
-        rimshot      => { num => 37, chan => $self->chan < 0 ?  5 : $self->chan, pat => [] }, # uses "side-stick" tho
+        rimshot      => { num => 37, chan => $self->chan < 0 ?  5 : $self->chan, pat => [] }, # actually, "side-stick"
         clap         => { num => 39, chan => $self->chan < 0 ?  6 : $self->chan, pat => [] },
         shaker       => { num => 70, chan => $self->chan < 0 ?  7 : $self->chan, pat => [] },
         cowbell      => { num => 56, chan => $self->chan < 0 ?  8 : $self->chan, pat => [] },
@@ -257,8 +257,8 @@ sub _build_drums {
         low_tom      => { num => 45, chan => $self->chan < 0 ? 13 : $self->chan, pat => [] },
         conga        => { num => 45, chan => $self->chan < 0 ? 14 : $self->chan, pat => [] },
         kick2        => { num => 35, chan => $self->chan < 0 ? 15 : $self->chan, pat => [] },
-        snare2       => { num => 40, chan => $self->chan < 0 ? 16 : $self->chan, pat => [] }, # bogus channels now...
-        pedal        => { num => 44, chan => $self->chan < 0 ? 19 : $self->chan, pat => [] }, # if multi-timbral:
+        snare2       => { num => 40, chan => $self->chan < 0 ? 16 : $self->chan, pat => [] }, # Bogus channels now.
+        pedal        => { num => 44, chan => $self->chan < 0 ? 19 : $self->chan, pat => [] }, # If multi-timbral:
         low_floor    => { num => 41, chan => $self->chan < 0 ? 17 : $self->chan, pat => [] }, # redefine with add_drums
         hi_floor     => { num => 43, chan => $self->chan < 0 ? 18 : $self->chan, pat => [] },
         hihi_tom     => { num => 50, chan => $self->chan < 0 ? 20 : $self->chan, pat => [] },
