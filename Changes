@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0510 2026-06-11 16:02:23
     - Drop unused cruft: "notes."
     - Use `try` to improve / simplify the error message when opening the port.
 
