@@ -541,7 +541,12 @@ sub _build__midi_out {
     }
     catch ($e) {}
     my $name = $self->port_name;
-    $midi_out->open_port_by_name(qr/\Q$name/i);
+    try {
+        $midi_out->open_port_by_name(qr/\Q$name/i);
+    }
+    catch ($e) {
+        die "Can't open MIDI port: $name";
+    }
     return $midi_out;
 }
 
