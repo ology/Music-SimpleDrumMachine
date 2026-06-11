@@ -40,7 +40,7 @@ sub part_A {
     my %patterns = (
         closed => $mcr->euclid($p, $beats),
         kick   => $mcr->euclid($q, $beats),
-        snare  => $mcr->rotate_n($r, $mcr->euclid(2, 16)),
+        snare  => $mcr->rotate_n($r, $mcr->euclid(2, $beats)),
     );
     my $next = 'part_B';
     return $next, \%patterns;
