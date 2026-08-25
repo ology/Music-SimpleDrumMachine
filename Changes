@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    Add tests!
 
 0.0511 2026-08-25 12:42:45
     - Add the shared pattern file to the Grooves constructor.
