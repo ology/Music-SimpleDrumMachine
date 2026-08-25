@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Add the shared pattern file to the Grooves constructor.
 
 0.0510 2026-06-11 16:02:23
     - Drop unused cruft: "notes."

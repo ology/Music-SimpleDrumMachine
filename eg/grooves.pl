@@ -19,7 +19,10 @@ my $chan = shift // 9;
 my $cat  = shift // 'rock';
 my $name = shift // '';
 
-my $grooves = MIDI::Drummer::Tiny::Grooves->new(return_patterns => 1);
+my $grooves = MIDI::Drummer::Tiny::Grooves->new(
+    return_patterns => 1,
+    # share_file => '/Users/gene/sandbox/MIDI-Drummer-Tiny/share/drum-pattern-bit-strings.txt',
+);
 
 $cat  = undef if $cat eq '*';
 $name = undef if $name eq '*';
