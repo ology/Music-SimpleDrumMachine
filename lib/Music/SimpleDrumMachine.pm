@@ -14,6 +14,7 @@ use Carp qw(croak);
 use IO::Async::Loop ();
 use IO::Async::Timer::Periodic ();
 use MIDI::RtMidi::FFI::Device ();
+use MIDI::Util qw(setup_score set_chan_patch);
 use Music::Duration::Partition ();
 use namespace::clean;
 
@@ -407,6 +408,55 @@ sub _build_parts {
     return { _default_part => sub { $self->_default_part } };
 }
 
+=head2 save
+
+  $save = $dm->save;
+
+If given a filename, mirror the MIDI stream into a L<MIDI::Simple>
+score as the drum machine plays, and write that score out to this
+file when the machine stops (C<Ctrl-C>).
+
+The live, real-time playback to B<port_name> is unaffected either
+way; this just additionally records the same hits into a score.
+
+Default: C<0> (do not save)
+
+=cut
+
+has save => (
+    is      => 'ro',
+    default => 0,
+);
+
+=head2 score
+
+  $score = $dm->score;
+
+The L<MIDI::Simple> score object that hits are recorded into when
+B<save> is set. Built lazily via L<MIDI::Util>'s C<setup_score>.
+
+=cut
+
+has score => (
+    is      => 'lazy',
+    builder => '_build_score',
+);
+sub _build_score {
+    my ($self) = @_;
+    my $score = setup_score(
+        bpm     => $self->bpm,
+        lead_in => 0,
+    );
+    if ($self->chan < 0) {
+        warn "Multi-timbral isn't supported by a single-track score; using channel 9.\n";
+        set_chan_patch($score, 9);
+    }
+    else {
+        set_chan_patch($score, $self->chan);
+    }
+    return $score;
+}
+
 =head2 port_name
 
   $port = $dm->port_name;
@@ -618,6 +668,10 @@ sub BUILD {
         catch ($e) {
             warn "Can't halt the MIDI out device: $e\n";
         }
+        if ($self->save) {
+            $self->score->write_score($self->save);
+            say 'Saved score to ' . $self->save if $self->verbose;
+        }
         exit;
     };
 
@@ -645,9 +699,20 @@ sub BUILD {
                     $self->_adjust_drums(0); # normal part
                     $self->_trigger($self->_trigger + 1);
                 }
+                my @hits; # for the score, if saving
                 for my $drum (keys $self->drums->%*) { # fill the queue
                     if ($self->drums->{$drum}{pat}[ $self->_beat_count % scalar($self->drums->{$drum}{pat}->@*) ]) {
                         push $self->_queue->@*, { drum => $drum, velocity => $self->velocity };
+                        push @hits, $self->drums->{$drum}{num} if $self->save;
+                    }
+                }
+                if ($self->save) {
+                    $self->score->Volume($self->velocity);
+                    if (@hits) {
+                        $self->score->n('sn', @hits); # chord = simultaneous drum hits
+                    }
+                    else {
+                        $self->score->r('sn');
                     }
                 }
                 for my $drum ($self->_queue->@*) { # play the queue
@@ -794,6 +859,26 @@ sub _default_fill($self) {
     return $next, \%patterns;
 }
 
+=head2 write_score
+
+  $dm->write_score;
+  $dm->write_score($filename);
+
+Write the recorded C<score> out to a MIDI file. Called automatically
+on C<Ctrl-C> when B<save> is set; exposed here in case you want to
+flush a snapshot to disk without stopping playback.
+
+If no B<$filename> is given, the B<save> attribute's value is used.
+
+=cut
+
+sub write_score {
+    my ($self, $filename) = @_;
+    $filename //= $self->save;
+    croak 'No filename given and no save attribute set' unless $filename;
+    $self->score->write_score($filename);
+}
+
 =head2 velocity
 
   $dm->velocity;
@@ -824,6 +909,8 @@ L<IO::Async::Loop>
 L<IO::Async::Timer::Periodic>
 
 L<MIDI::RtMidi::FFI::Device>
+
+L<MIDI::Util>
 
 L<Moo>
 
