@@ -31,8 +31,8 @@ my $dm = Music::SimpleDrumMachine->new(
         part_B => \&part_B,
         part_C => \&part_C,
     },
-    save     => $file, # save doubles as the output filename
-    verbose  => 1,
+    save    => $file, # save doubles as the output filename
+    verbose => 1,
 );
 
 sub part_A {
