@@ -432,8 +432,8 @@ has save => (
 
   $score = $dm->score;
 
-The L<MIDI::Simple> score object that hits are recorded into when
-B<save> is set. Built lazily via L<MIDI::Util>'s C<setup_score>.
+The L<MIDI::Simple> score object that is recorded to when B<save> is
+set.
 
 =cut
 
