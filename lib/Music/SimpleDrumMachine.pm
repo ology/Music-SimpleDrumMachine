@@ -24,20 +24,23 @@ no warnings 'experimental::try';
 
   use Music::SimpleDrumMachine ();
 
-  my $dm = Music::SimpleDrumMachine->new( # use defaults
+  # use defaults
+  my $dm = Music::SimpleDrumMachine->new(
     port_name => 'midi device', # required
   );
-
-  # OR:
+  # Or set things:
   $dm = Music::SimpleDrumMachine->new(
     port_name => 'midi device',
     bpm       => 100,
+    save      => 'drums.mid',
     parts     => {
         part_A => \&part_A,
         part_B => \&part_B,
     },
     next_part => 'part_A',
-    fills     => { fill_A => \&fill_A },
+    fills     => {
+        fill_A => \&fill_A,
+    },
     next_fill => 'fill_A',
     verbose   => 1,
   );

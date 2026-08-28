@@ -1,6 +1,7 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Improve documentation.
 
 0.0600 2026-08-25 19:49:57
     - Add the save attribute and logic.
