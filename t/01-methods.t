@@ -10,6 +10,7 @@ ok lives { require Music::SimpleDrumMachine }, 'Music::SimpleDrumMachine loads'
     sub run { 1 } # return immediately instead of blocking forever
 }
 
+# typeglob, symbol-table entry for the name _loop in the package
 no warnings 'redefine';
 local *Music::SimpleDrumMachine::_loop = sub { Test::FakeLoop->new };
 
