@@ -1,7 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
-    - Improve documentation.
+    - Improve documentation and comments.
+    - Convert tests to use the Test2 suite.
 
 0.0600 2026-08-25 19:49:57
     - Add the save attribute and logic.
