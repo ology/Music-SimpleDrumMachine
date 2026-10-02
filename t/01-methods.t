@@ -100,7 +100,7 @@ subtest velocity => sub {
 };
 
 subtest parts_and_fills => sub {
-    my $obj = new_obj( port_name => 'test' );
+    my $obj = new_obj(port_name => 'test');
 
     my ($next, $patterns) = $obj->_default_part;
     is $next, '_default_part', '_default_part next';
@@ -112,7 +112,7 @@ subtest parts_and_fills => sub {
     }, '_default_part has kick, snare and closed patterns';
 
     my ($fnext, $fpatterns);
-    for ( 1 .. 20 ) {
+    for (1 .. 20) {
         last if lives { ($fnext, $fpatterns) = $obj->_default_fill };
     }
     is $fnext, '_default_fill', '_default_fill next';
