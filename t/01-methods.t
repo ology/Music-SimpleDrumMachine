@@ -45,8 +45,8 @@ subtest defaults => sub {
     ref_ok $obj->parts, 'HASH', 'parts';
     ref_ok $obj->fills, 'HASH', 'fills';
 
-    is $obj->parts, hash { field _default_part => D(); etc }, 'default part exists';
-    is $obj->fills, hash { field _default_fill => D(); etc }, 'default fill exists';
+    is $obj->parts, hash { field _default_part => D(); etc }, 'default parts exist';
+    is $obj->fills, hash { field _default_fill => D(); etc }, 'default fills exist';
 };
 
 subtest drums => sub {
