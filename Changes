@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0602 2026-10-01 21:34:31
     - Make the number of bars before a change, definable.
 
 0.0601 2026-10-01 18:16:43
