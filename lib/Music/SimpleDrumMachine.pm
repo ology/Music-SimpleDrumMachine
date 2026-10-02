@@ -121,6 +121,25 @@ has beats => (
     default => sub { 16 },
 );
 
+=head2 bars
+
+  $bars = $dm->bars;
+
+The number of measures (bars) a part plays before the next part is
+chosen. When this is greater than C<1>, the last bar of the phrase is
+available for a fill. With C<1>, a part changes every measure and
+there is no room for fills.
+
+Default: C<4>
+
+=cut
+
+has bars => (
+    is      => 'ro',
+    isa     => sub { croak "$_[0] is not a positive integer" unless $_[0] =~ /^[1-9]\d*$/ },
+    default => sub { 4 },
+);
+
 =head2 bpm
 
   $bpm = $dm->bpm;
@@ -629,7 +648,6 @@ my %attrs = (
         _bar_count  => 0, # how many measures?
         _hats       => 0, # 1st hihat beat bit
         _part_inc   => 0, # number of next_part
-        _trigger    => 0, # trigger a fill
         _filled     => 0, # we just filled
     },
 );
@@ -692,15 +710,17 @@ sub BUILD {
             $self->_ticks($self->_ticks + 1);
 
             if ($self->_ticks % $self->_nth == 0) {
+                my $phrase = $self->beats * $self->bars; # steps in a phrase
+                my $pos    = $self->_beat_count % $phrase;
                 if (($self->filling || (ref($self->next_part) && $self->next_part->[ $self->_part_inc % $self->next_part->@* ] =~ /fill/))
-                    && ($self->_beat_count + $self->beats - $self->_trigger) % ($self->beats * $self->divisions - 1) == 0
+                    && $self->bars > 1
+                    && $pos == $phrase - $self->beats # the last bar of the phrase
                 ) {
                     $self->_adjust_drums(1); # fill!
                     $self->_filled($self->_filled + 1);
                 }
-                if ($self->_beat_count % ($self->beats * $self->divisions) == 0) {
+                if ($pos == 0) {
                     $self->_adjust_drums(0); # normal part
-                    $self->_trigger($self->_trigger + 1);
                 }
                 my @hits; # for the score, if saving
                 for my $drum (keys $self->drums->%*) { # fill the queue
@@ -801,7 +821,7 @@ sub _adjust_drums($self, $fill_flag) {
     }
     if ($self->filling) {
         $self->_hats($self->drums->{closed}{pat}[0]); # save bit
-        $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->divisions) ];
+        $self->drums->{fillcrash}{pat} = [ (0) x ($self->beats * $self->bars) ];
         $self->_adjust_cymbals;
         $self->_filled(0);
     }
