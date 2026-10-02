@@ -5,9 +5,18 @@ ok lives { require Music::SimpleDrumMachine }, 'Music::SimpleDrumMachine loads'
 
 {
     package Test::FakeLoop;
+    our @ADDED; # timers handed to the loop, so tests can drive them by hand
     sub new { bless {}, shift }
-    sub add { 1 }
+    sub add { push @ADDED, $_[1]; 1 }
     sub run { 1 } # return immediately instead of blocking forever
+}
+
+{
+    package Test::FakeMidi;
+    sub new      { bless {}, shift }
+    sub clock    { 1 }
+    sub note_on  { 1 }
+    sub note_off { 1 }
 }
 
 # typeglob, symbol-table entry for the name _loop in the package
@@ -26,6 +35,7 @@ sub new_obj {
 subtest defaults => sub {
     my $obj = new_obj( port_name => 'test' );
     is $obj->beats,      16,              'beats';
+    is $obj->bars,       4,               'bars';
     is $obj->bpm,        120,             'bpm';
     is $obj->chan,       9,               'chan';
     is $obj->divisions,  4,               'divisions';
@@ -118,6 +128,50 @@ subtest parts_and_fills => sub {
     is $fnext, '_default_fill', '_default_fill next';
     is $fpatterns, hash { field snare => D(); etc },
         '_default_fill has a snare pattern';
+};
+
+subtest bars => sub {
+    is new_obj(port_name => 'test', bars => 1)->bars, 1, 'bars accepts 1';
+    is new_obj(port_name => 'test', bars => 2)->bars, 2, 'bars accepts 2';
+
+    for my $bad (0, -1, 2.5, 'abc') {
+        ok dies { Music::SimpleDrumMachine->new( port_name => 'test', bars => $bad ) },
+            "'$bad' is rejected";
+    }
+
+    # Drive the timer's on_tick by hand. One bar is 96 clock ticks
+    # (ppqn 24 x 4 quarter-notes), and a step (16th-note) is every 6 ticks.
+    my $ticks_per_bar = 96;
+    my $measures      = 4;
+
+    for my $case ( [1,4,0], [2,2,2], [4,1,1] ) {
+        my ($bars, $want_parts, $want_fills) = @$case;
+
+        my ($parts, $fills) = (0, 0);
+        local @Test::FakeLoop::ADDED = ();
+
+        new_obj(
+            port_name => 'test',
+            bars      => $bars,
+            filling   => 1,
+            next_part => 'count_part',
+            next_fill => 'count_fill',
+            parts     => { count_part => sub { $parts++; return 'count_part', { kick  => [ (1) x 16 ] } } },
+            fills     => { count_fill => sub { $fills++; return 'count_fill', { snare => [ (1) x 16 ] } } },
+            _midi_out => Test::FakeMidi->new,
+        );
+
+        my ($timer) = @Test::FakeLoop::ADDED;
+        ok $timer, "bars => $bars: a timer added to the loop"
+            or next;
+
+        $timer->invoke_event('on_tick') for 1 .. $measures * $ticks_per_bar;
+
+        is $parts, $want_parts,
+            "bars: $bars - a part chosen $want_parts time(s) in $measures measures";
+        is $fills, $want_fills,
+            "bars: $bars - $want_fills fill(s) in $measures measures";
+    }
 };
 
 done_testing;
