@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0700 2026-10-03 11:50:36
     - Make the `next_part` accept a hashref of weighted probabilities.
     - Make the eg/save-it.pl program illustrate this.
 
