@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
-# Just like euclidean.pl but with a save attribute
+# Just like euclidean.pl but with a save attribute and weighted next
+# part probability.
 
 use v5.36;
 use Math::Prime::XS qw(primes);
