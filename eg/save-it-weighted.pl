@@ -11,7 +11,7 @@ use Music::SimpleDrumMachine ();
 my $name = shift || 'usb';
 my $bpm  = shift || 120;
 my $chan = shift // 9;
-my $file = shift || 'drums.mid';
+my $file = shift || "$0.mid";
 
 my $beats  = 16;
 my %primes = ( # for computing patterns
