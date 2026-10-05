@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0702 2026-10-05 10:28:34
     - Fix the duplicated instrument numbers.
     - Fix documentation.
     - Fix up and rename the saving example program.
