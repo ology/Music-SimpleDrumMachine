@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+
+0.0800 2026-11-19 18:59:13
     - Exposed the loop and added an `autoplay` attribute.
     - Improve tests.
 
