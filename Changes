@@ -1,6 +1,8 @@
 Revision history for Music-SimpleDrumMachine
 
 {{$NEXT}}
+    - Exposed the loop and added an `autoplay` attribute.
+    - Improve tests.
 
 0.0702 2026-10-05 10:28:34
     - Fix the duplicated instrument numbers.
