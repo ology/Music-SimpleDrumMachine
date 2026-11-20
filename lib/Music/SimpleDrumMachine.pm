@@ -617,6 +617,23 @@ has verbose => (
     default => sub { 0 },
 );
 
+=head2 virtual
+
+  $virtual = $dm->virtual;
+
+Open a virtual port, which is sometimes needed on the mac, but will
+make Windows crash, apparently.
+
+Default: C<0>
+
+=cut
+
+has virtual => ( # a virtual port is sometimes needed on the mac
+    is      => 'ro',
+    isa     => sub { croak "$_[0] is not a boolean" unless $_[0] =~ /^[01]$/ },
+    default => sub { 1 },
+);
+
 has _queue => (
     is      => 'rw',
     default => sub { [] },
@@ -629,10 +646,12 @@ has _midi_out => (
 sub _build__midi_out {
     my ($self) = @_;
     my $midi_out = RtMidiOut->new;
-    try { # this will die on windows but is needed on the mac
-        $midi_out->open_virtual_port('RtMidiOut');
+    if ($self->virtual) {
+        try { # this will die on windows but is needed on the mac
+            $midi_out->open_virtual_port('RtMidiOut');
+        }
+        catch ($e) {}
     }
-    catch ($e) {}
     my $name = $self->port_name;
     try {
         $midi_out->open_port_by_name(qr/\Q$name/i);
