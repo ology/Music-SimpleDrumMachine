@@ -2,7 +2,7 @@ package Music::SimpleDrumMachine;
 
 # ABSTRACT: Simple 16th-note-phrase Drummer
 
-our $VERSION = '0.0800';
+our $VERSION = '0.0801';
 
 use v5.36;
 use feature 'try';
@@ -78,8 +78,9 @@ no warnings 'experimental::try';
 =head1 DESCRIPTION
 
 C<Music::SimpleDrumMachine> is a simple 16th-note-phrase drummer. By
-invoking this module, your MIDI device will begin playing in
-real-time.
+default, invoking this module, your MIDI device will begin playing in
+real-time. If C<autoplay> is set to C<0>, and an L<IO::Async::Loop>
+object is given, this module waits for the C<loop> to start.
 
 * Triplets are not supported. Boo!
 
